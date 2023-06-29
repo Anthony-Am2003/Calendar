@@ -1,10 +1,15 @@
 import "./App.css";
-import image from "./assets/img/estudiosos.jpg";
-
+import HomePage from "./views/home/home";
+import Form from "./views/form/form";
+import {Routes, Route} from "react-router-dom";
 function App() {
   return (
-    <div className="min-h-screen w-full">
-      <img src={image} className="bg-cover w-full h-full" />
+    <div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/events" element={<Form />} />
+        <Route path="/calendars" />
+      </Routes>
     </div>
   );
 }
