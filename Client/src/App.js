@@ -1,5 +1,6 @@
 import "./App.css";
 import image from "./assets/img/estudiosos.jpg";
+
 function App() {
   return (
     <div className="min-h-screen w-full">
