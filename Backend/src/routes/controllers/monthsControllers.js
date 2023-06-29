@@ -1,4 +1,4 @@
-const yearController = ()=>{
+const monthsController = ()=>{
     const months = [  
         'January',
     'February',
@@ -16,4 +16,4 @@ const yearController = ()=>{
 
 }
 
-module.exports = {yearController}
+module.exports = {monthsController}
