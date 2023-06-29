@@ -1,4 +1,4 @@
-const {monthController} = require('../controllers/monthController')
+const { monthController } = require('../controllers/monthController')
 
 module.exports = async(req, res) =>{
   try {
