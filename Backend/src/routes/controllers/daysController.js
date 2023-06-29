@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-const monthController = (monthNumber, yearNumber) => {
+const daysController = (monthNumber, yearNumber) => {
 
   if (yearNumber < 1900 || yearNumber > 2123 || !Number.isInteger(Number(yearNumber))) {
   throw new Error("Fecha fuera de rango");
@@ -29,4 +29,4 @@ if (monthNumber < 0 || monthNumber > 11 || !Number.isInteger(Number(monthNumber)
 };
 
 
-module.exports = { monthController }
+module.exports = {daysController }
