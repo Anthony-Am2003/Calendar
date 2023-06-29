@@ -1,6 +1,5 @@
 # Proyecto del Calendario: Gestión de Tareas y Eventos
 
-a
 Resumen:
 El proyecto del Calendario es una aplicación web basada en React que permite a los usuarios organizar y gestionar sus tareas y eventos en un calendario interactivo. El objetivo principal es brindar una herramienta intuitiva y fácil de usar para planificar y administrar actividades diarias, semanales y mensuales.
 
