@@ -1,4 +1,4 @@
-const {getMonth} = require('./handlers/getMonth');
+const getMonth = require('./handlers/getMonth');
 
 const { Router } = require("express");
 
