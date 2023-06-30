@@ -1,10 +1,23 @@
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {getDays} from "../../Redux/actions";
+import SearchBar from "../SearchBar/SearchBar";
+
 const Calendar = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fecha = new Date();
+    const month = fecha.getMonth();
+    const year = fecha.getFullYear();
+    dispatch(getDays(month, year));
+  }, []);
+
   return (
     <div className="container mx-auto">
       <div className="wrapper bg-white rounded shadow w-full ">
         <div className="header flex justify-between border-b p-2">
-          <span className="text-4xl font-extralight font-[Poppins] flex items-center  w-full justify-center ">
-            2020 July
+          <span className="text-4xl font-extralight font-[Poppins] flex items-center w-full justify-around  ">
+            2020 July <SearchBar />
           </span>
           <div className="buttons">
             <button className="p-1">
