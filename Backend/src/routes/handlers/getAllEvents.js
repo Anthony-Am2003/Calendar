@@ -1,4 +1,4 @@
-const { getAllEvents } = require('../controllers/eventsControllers')
+const { getAllEvents } = require('../controllers/getAllEventsController')
 
 module.exports = async (req, res)=>{
 
