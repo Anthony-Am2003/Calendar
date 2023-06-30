@@ -3,7 +3,7 @@ import axios from "axios";
 import {
   GET_DAYS,
   GET_MONTHS,
-  GET_YEARS,
+  GET_MONTHS_PER_YEAR,
   GET_DETAIL_DAY,
   POST_EVENT,
 } from "./action-types";
@@ -17,6 +17,7 @@ export const getDays = (monthNumber, yearNumber) => {
         prevMonth: [],
         actualMonth: [],
         nextMonth: [],
+        yearNumber: yearNumber
       };
 
       const actualMonth = (
@@ -84,4 +85,33 @@ export const getMonths = () => {
       return console.log(error.message);
     }
   };
+};
+
+export const getMonthsPerYear = (year) => {
+   return async (dispatch) => {
+      try {
+         const daysByMonth = {
+            0: [], // January
+            1: [], // February
+            2: [], // March
+            3: [], // April
+            4: [], // May
+            5: [], // June
+            6: [], // July
+            7: [], // August
+            8: [], // September
+            9: [], // October
+            10: [], // November
+            11: [] // December
+         }
+         for(let prop in daysByMonth){
+            const response = (await axios.get(`${URL}/days?monthNumber=${prop}&yearNumber=${year}`)).data;
+            daysByMonth[prop] = response
+         }
+
+         return dispatch({type: GET_MONTHS_PER_YEAR, payload: daysByMonth})
+      } catch (error) {
+         return console.log(error.message);
+      }
+   }
 };
