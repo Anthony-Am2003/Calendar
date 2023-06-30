@@ -24,7 +24,7 @@ export const getDays = (monthNumber, yearNumber) => {
           `${URL}/days?monthNumber=${monthNumber}&yearNumber=${yearNumber}`
         )
       ).data;
-      months.actualMonth = [...actualMonth];
+      months.actualMonth = actualMonth;
 
       // 0 es enero y 11 es diciembre
       if (monthNumber === 0) {
@@ -35,7 +35,7 @@ export const getDays = (monthNumber, yearNumber) => {
             }` // Obtengo diciembre del año anterior
           )
         ).data;
-        months.prevMonth = [...prevMonth];
+        months.prevMonth = prevMonth;
       } else {
         const prevMonth = (
           await axios.get(
@@ -44,7 +44,7 @@ export const getDays = (monthNumber, yearNumber) => {
             }&yearNumber=${yearNumber}`
           )
         ).data;
-        months.prevMonth = [...prevMonth];
+        months.prevMonth = prevMonth;
       }
 
       if (monthNumber === 11) {
@@ -55,7 +55,7 @@ export const getDays = (monthNumber, yearNumber) => {
             }` // Obtengo enero del año siguiente
           )
         ).data;
-        months.nextMonth = [...nextMonth];
+        months.nextMonth = nextMonth;
       } else {
         const nextMonth = (
           await axios.get(
@@ -64,7 +64,7 @@ export const getDays = (monthNumber, yearNumber) => {
             }&yearNumber=${yearNumber}`
           )
         ).data;
-        months.nextMonth = [...nextMonth];
+        months.nextMonth = nextMonth;
       }
 
       return dispatch({type: GET_DAYS, payload: months});
