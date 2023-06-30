@@ -1,4 +1,4 @@
-const {postEventController} = require ('../controllers/eventController')
+const {postEventController} = require ('../controllers/postEventController')
 
 module.exports = async (req, res) => {
     const { name, initialDate, finalDate, image,description, location, reminder, category } = req.body
