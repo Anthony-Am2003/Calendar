@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {getDays} from "../../Redux/actions";
+import {getDays, getMonths} from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Calendar = () => {
@@ -10,6 +10,7 @@ const Calendar = () => {
     const month = fecha.getMonth();
     const year = fecha.getFullYear();
     dispatch(getDays(month, year));
+    dispatch(getMonths())
   }, []);
 
   return (
@@ -42,14 +43,16 @@ const Calendar = () => {
               <div className="drawer-content">
                 <label
                   htmlFor="my-drawer-4"
-                  className="drawer-button btn btn-ghost">
+                  className="drawer-button btn btn-ghost"
+                >
                   <svg
                     width="1.5em"
                     fill="black"
                     height="1.5em"
                     viewBox="0 0 16 16"
                     className="bi bi-arrow-left-circle"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       fill-rule="evenodd"
                       d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
