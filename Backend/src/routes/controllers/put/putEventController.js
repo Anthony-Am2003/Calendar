@@ -28,15 +28,43 @@ module.exports = async (
     startDate.add(1, "day");
   }
 
-  await eventToPut.update({
-    name: name,
-    initialDate: initialDate,
-    finalDate: finalDate,
-    image: image,
-    description: description,
-    location: location,
-    reminder: reminder,
-    category: category,
-    allDates: allDates,
-  });
+  const updatedValues = {};
+
+  if (name) {
+    updatedValues.name = name;
+  }
+
+  if (initialDate) {
+    updatedValues.initialDate = initialDate;
+  }
+
+  if (finalDate) {
+    updatedValues.finalDate = finalDate;
+  }
+
+  if (image) {
+    updatedValues.image = image;
+  }
+
+  if (description) {
+    updatedValues.description = description;
+  }
+
+  if (location) {
+    updatedValues.location = location;
+  }
+
+  if (reminder) {
+    updatedValues.reminder = reminder;
+  }
+
+  if (category) {
+    updatedValues.category = category;
+  }
+
+  if (allDates.length > 0) {
+    updatedValues.allDates = allDates;
+  }
+
+  await eventToPut.update(updatedValues);
 };
