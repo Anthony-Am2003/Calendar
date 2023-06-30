@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
         username: userFound.username,
       };
 
-      const token = await jwt.sign(userForToken, "Huntek");
+      const token = await jwt.sign(userForToken, process.env.SECRET);
 
       return res.status(200).json({
         data: {
