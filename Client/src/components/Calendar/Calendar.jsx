@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getDays, getMonths, getMonthsPerYear } from "../../Redux/actions";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getDays, getMonths, getMonthsPerYear} from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Calendar = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const week = [0, 1, 2, 3, 4, 5, 6];
-	const { showedMonths } = useSelector((state) => state);
-	const prev = showedMonths.prevMonth;
-	const month = showedMonths.actualMonth;
-	const next = showedMonths.nextMonth;
+  const week = [0, 1, 2, 3, 4, 5, 6];
+  const {showedMonths} = useSelector((state) => state);
+  const prev = showedMonths.prevMonth;
+  const month = showedMonths.actualMonth;
+  const next = showedMonths.nextMonth;
 
 	const fecha = new Date();
 	const dayNumberTd = fecha.getDate();
@@ -42,6 +42,7 @@ const Calendar = () => {
 			}
 		}
 	}
+
 	const monthName = (monthNumer) => {
 		switch (monthNumer) {
 			case 0:
@@ -71,24 +72,24 @@ const Calendar = () => {
 		}
 	};
 
-	const dayName = (dayNumber) => {
-		switch (dayNumber) {
-			case 0:
-				return "Sunday";
-			case 1:
-				return "Monday";
-			case 2:
-				return "Tuesday";
-			case 3:
-				return "Wednesday";
-			case 4:
-				return "Thursday";
-			case 5:
-				return "Friday";
-			default:
-				return "Saturday";
-		}
-	};
+  const dayName = (dayNumber) => {
+    switch (dayNumber) {
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      default:
+        return "Saturday";
+    }
+  };
 
 	const handleClickPrev = () => {
 		if (monthNumber === 0) {
