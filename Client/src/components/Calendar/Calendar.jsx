@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDays } from "../../Redux/actions";
+import { getDays, getMonths, getMonthsPerYear } from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Calendar = () => {
@@ -38,6 +38,8 @@ const Calendar = () => {
 				}
 			}
 		});
+      dispatch(getMonthsPerYear(yearNumber));
+      dispatch(getMonths());
 	}, []);
 
 	const monthName = (monthNumer) => {

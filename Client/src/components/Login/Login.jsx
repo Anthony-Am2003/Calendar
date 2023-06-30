@@ -33,7 +33,7 @@ const Login = () => {
 	return (
 		<div class='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 bg-white'>
 			<div class='mx-auto max-w-lg'>
-				<h1 class='text-center text-2xl font-bold text-indigo-600 sm:text-3xl'>
+				<h1 class='text-center text-2xl font-bold text-indigo-600 sm:text-3xl font-[Poppins]'>
 					Calendar App
 				</h1>
 
@@ -42,7 +42,7 @@ const Login = () => {
 					class='mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8'
 					onSubmit={handleSumbit}
 				>
-					<p class='text-center text-lg font-medium'>Sign in to your account</p>
+					<p class='text-center text-lg font-medium font-[Poppins]'>Sign in to your account</p>
 					<div>
 						<label for='username' class='sr-only'>
 							username
@@ -50,7 +50,7 @@ const Login = () => {
 						<div class='relative'>
 							<input
 								type='text'
-								class='w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white'
+								class='w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]'
 								placeholder='Enter username'
 								onBlur={handleBlur}
 								name='username'
@@ -66,7 +66,7 @@ const Login = () => {
 						<div class='relative'>
 							<input
 								type='password'
-								class='w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white'
+								class='w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]'
 								placeholder='Enter password'
 								onBlur={handleBlur}
 								name='password'
@@ -99,15 +99,15 @@ const Login = () => {
 
 					<button
 						type='submit'
-						class='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white'
+						class='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white font-[Poppins]'
 					>
 						Sign in
 					</button>
 
-					<p class='text-center text-sm text-gray-500'>
+					<p class='text-center text-sm text-gray-500 font-[Poppins]'>
 						No account?
 						<Link to='/register'>
-							<button class='underline' href=''>
+							<button class='underline font-[Poppins]' href=''>
 								Sign up
 							</button>
 						</Link>
