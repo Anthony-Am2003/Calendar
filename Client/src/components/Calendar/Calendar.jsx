@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getDays } from "../../Redux/actions";
+
 const Calendar = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fecha = new Date;
+    const month = fecha.getMonth();
+    const year = fecha.getFullYear();
+   dispatch(getDays(month, year));
+   
+  }, []);
+
+
   return (
     <div className="container mx-auto">
       <div className="wrapper bg-white rounded shadow w-full ">
