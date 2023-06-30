@@ -64,9 +64,9 @@ const Calendars = () => {
           calendar = React.cloneElement(calendar, {}, [
             ...calendar.props.children,
             <div
-              className="flex justify-between ml-${
-            j === 31 ? 1 : 0
-          } font-medium text-sm pb-2">
+              className={`flex justify-between ml-${
+                j === 31 ? 1 : 0
+              } font-medium text-sm pb-2`}>
               {days}
             </div>,
           ]);
