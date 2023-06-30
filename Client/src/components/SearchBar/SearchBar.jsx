@@ -7,7 +7,6 @@ const SearchBar = () => {
     e.preventDefault();
     dispatch("aca iria la action").then(() => setDate(""));
   };
-  console.log(date);
   return (
     <div>
       <input
