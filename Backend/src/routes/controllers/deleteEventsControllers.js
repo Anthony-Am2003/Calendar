@@ -7,4 +7,7 @@ const deleteEvent = async(id)=>{
     return allEvents;
 }
 
-module.exports = deleteEvent;
+
+module.exports = {
+    deleteEvent
+};
