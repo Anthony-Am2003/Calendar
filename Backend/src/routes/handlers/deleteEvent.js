@@ -1,4 +1,4 @@
-const deleteEvent = require("../controllers/eventsControllers")
+const { deleteEvent } = require("../controllers/deleteEventsControllers")
 
 module.exports= async(req, res)=>{
     const { id } = req.params;
