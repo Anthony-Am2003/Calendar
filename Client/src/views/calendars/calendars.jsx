@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 const Calendars = () => {
-  const [year, setYear] = useState("2023");
+  const [year, setYear] = useState(2023);
   const generateCalendars = () => {
     const months = [
       "January",
@@ -25,26 +25,26 @@ const Calendars = () => {
               {months[i]}
             </span>
           </div>
-          <div className="flex justify-center font-medium uppercase text-xs pt-4 pb-2 border-t">
-            <div className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-slate-900 text-slate-900 shadow-md">
+          <div className="flex justify-center  font-medium uppercase text-xs pt-4 pb-2 border-t">
+            <div className=" border rounded-sm w-full h-5 flex items-center justify-center border-slate-900 text-slate-900 shadow-md">
               sun
             </div>
-            <span className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
+            <span className=" border rounded-sm w-full h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
               mon
             </span>
-            <span className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
+            <span className=" border rounded-sm w-full h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
               tue
             </span>
-            <span className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
+            <span className=" border rounded-sm w-full h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
               wed
             </span>
-            <span className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
+            <span className=" border rounded-sm w-full h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
               thu
             </span>
-            <span className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
+            <span className=" border rounded-sm w-full h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
               fri
             </span>
-            <span className="px-3 border rounded-sm w-14 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
+            <span className=" border rounded-sm w-full h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
               sat
             </span>
           </div>
@@ -56,7 +56,7 @@ const Calendars = () => {
           <span
             className={`${
               j <= 0 ? "text-gray-400" : ""
-            } w-10 flex justify-center items-center cursor-pointer`}>
+            } w-10 flex justify-center items-center  cursor-pointer`}>
             {(j <= 0 ? 31 + j : j).toString().padStart(2, "0")}
           </span>
         );
