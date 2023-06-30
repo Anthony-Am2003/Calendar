@@ -1,12 +1,48 @@
-const { Events } = require("../../db.js")
+const { Events } = require("../../db.js");
+const moment = require("moment");
 
-const postEventController = async (name, initialDate, finalDate, image, description, location, reminder, category) => {
+const postEventController = async( 
+  name,
+  initialDate,
+  finalDate,
+  image,
+  description,
+  location,
+  reminder,
+  category
+) => {
+  const allDates = [];
 
-    const newEvent = await Events.create({ name, initialDate, finalDate, image, description, location, reminder, category })
+  const startDate = moment(initialDate, "YYYY-MM-DD");
+  const endDate = moment(finalDate, "YYYY-MM-DD");
 
-    return newEvent
-}
+  while (startDate.isSameOrBefore(endDate)) {
+    allDates.push(startDate.format("YYYY-MM-DD"));
+    startDate.add(1, "day");
+  }
+
+  const newEvent = await Events.create({
+    name,
+    initialDate,
+    finalDate,
+    image,
+    description,
+    location,
+    reminder,
+    category,
+    allDates,
+  });
+
+  return newEvent;
+};
 
 module.exports = {
-    postEventController
-}
+  postEventController,
+};
+
+
+
+
+
+
+
