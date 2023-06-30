@@ -1,13 +1,21 @@
-import { GET_DAYS } from "./action-types";
+import { GET_DAYS, GET_MONTHS, GET_MONTHS_PER_YEAR } from "./action-types";
 import { getDaysMd } from "./reducerMd/getDaysMd";
+import { getMonthsMd } from "./reducerMd/getMonthsMd";
+import { getMonthsPerYearMd } from "./reducerMd/getMonthsPerYearMd"
 
 const initialState = {
-   fullYear: [], // Contiene 12 meses.
+   allMonths: [], // Contiene 12 meses.
    showedMonths: {
       prevMonth: [],
       actualMonth: [], // Trae el mes actual y prev/next para acomodar la vista.
-      nextMonth: []
-   }
+      nextMonth: [],
+   },
+   monthsPerYear: {
+      year: undefined,
+      january: [], february: [], march: [], april: [], may: [], june: [], july: [],
+      august: [], september: [], october: [], november: [], december: []
+   },
+   currentYear: undefined
 }
 
 const reducer = (state = initialState, action) => {
@@ -15,7 +23,13 @@ const reducer = (state = initialState, action) => {
       case GET_DAYS:
          return getDaysMd(state, action);
 
-      default: return { ...state }
+      case GET_MONTHS:
+         return getMonthsMd(state, action);
+
+      case GET_MONTHS_PER_YEAR:
+         return getMonthsPerYearMd(state, action)
+
+      default: return { ...state };
    }
 };
 
