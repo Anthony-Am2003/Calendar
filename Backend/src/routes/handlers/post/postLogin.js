@@ -1,4 +1,4 @@
-const loginController = require("../controllers/loginController");
+const loginController = require("../../controllers/post/postLoginController");
 
 module.exports = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
       return res.status(400).json({ error: "Missing data." });
     }
 
-    const data = loginController(username, password);
+    const data = await loginController(username, password);
 
     return res.status(200).json(data);
   } catch ({ message }) {

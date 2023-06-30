@@ -74,12 +74,12 @@ export const getDays = (monthNumber, yearNumber) => {
   };
 };
 
-export const getMonth = () => {
+export const getMonths = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`${URL}/months`);
+      const allMonths = (await axios.get(`${URL}/months`)).data;
 
-      return dispatch({type: GET_MONTHS, payload: data});
+      return dispatch({type: GET_MONTHS, payload: allMonths});
     } catch (error) {
       return console.log(error.message);
     }

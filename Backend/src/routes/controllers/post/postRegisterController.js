@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../db");
+const { User } = require("../../../db");
 const { Op } = require("sequelize");
 
 module.exports = async (username, email, password) => {

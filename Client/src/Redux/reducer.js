@@ -1,5 +1,6 @@
-import { GET_DAYS } from "./action-types";
+import { GET_DAYS, GET_MONTHS } from "./action-types";
 import { getDaysMd } from "./reducerMd/getDaysMd";
+import { getMonthsMd } from "./reducerMd/getMonthsMd";
 
 const initialState = {
    fullYear: [], // Contiene 12 meses.
@@ -15,7 +16,10 @@ const reducer = (state = initialState, action) => {
       case GET_DAYS:
          return getDaysMd(state, action);
 
-      default: return { ...state }
+      case GET_MONTHS:
+         return getMonthsMd(state, action);
+
+      default: return { ...state };
    }
 };
 

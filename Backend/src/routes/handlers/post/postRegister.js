@@ -1,4 +1,4 @@
-const registerController = require("../controllers/registerController");
+const registerController = require("../../controllers/post/postRegisterController");
 
 module.exports = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
       return res.status(400).json({ error: "Missing data." });
     }
 
-    const data = registerController(username, email, password);
+    const data = await registerController(username, email, password);
 
     return res.status(201).json(data);
   } catch ({ message }) {
