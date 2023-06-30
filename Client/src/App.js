@@ -1,8 +1,10 @@
 import "./App.css";
 import HomePage from "./views/home/home";
 import LoginPage from "./views/login/login";
-import {Routes, Route} from "react-router-dom";
 import RegisterPage from "./views/register/register";
+import Calendars from "./views/calendars/calendars";
+import {Routes, Route} from "react-router-dom";
+
 function App() {
   return (
     <div>
@@ -10,8 +12,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        {/* <Route path="/events" element={<FormView />} /> */}
-        <Route path="/calendars" />
+        <Route path="/events" element={<Form />} />
+        <Route path="/calendars" element={<Calendars />} />
       </Routes>
     </div>
   );
