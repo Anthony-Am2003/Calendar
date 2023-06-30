@@ -7,13 +7,7 @@ const deleteEvent = async(id)=>{
     return allEvents;
 }
 
-const getAllEvents = async()=>{
-    const allEvents = await Events.findAll();
-    return allEvents;
-}
 
 module.exports = {
-    deleteEvent,
-    getAllEvents,
-
+    deleteEvent
 };
