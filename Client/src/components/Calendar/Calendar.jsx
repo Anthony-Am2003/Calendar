@@ -8,19 +8,19 @@ const Calendar = () => {
 
 	const week = [0, 1, 2, 3, 4, 5, 6];
 	const { showedMonths } = useSelector((state) => state);
-  const prev = showedMonths.prevMonth;
-  const month = showedMonths.actualMonth;
-  const next = showedMonths.nextMonth;
+	const prev = showedMonths.prevMonth;
+	const month = showedMonths.actualMonth;
+	const next = showedMonths.nextMonth;
 
 	const fecha = new Date();
 	const monthNumberTd = fecha.getMonth();
 	const yearNumberTd = fecha.getFullYear();
-	const [monthNumber, setMonthNumber] = useState(3);
-	const [yearNumber, setYearNumber] = useState(2023);
+	const [monthNumber, setMonthNumber] = useState(2);
+	const [yearNumber, setYearNumber] = useState(2021);
 
 	useEffect(() => {
-    dispatch(getDays(monthNumber, yearNumber)).then(() => {
-      if (month.length && prev.length && next.length) {
+		dispatch(getDays(monthNumber, yearNumber)).then(() => {
+			if (month.length && prev.length && next.length) {
 				if (month.day !== "Sunday") {
 					while (month[0].day !== "Sunday") {
 						let ultimo = prev[prev.length - 1];
@@ -28,8 +28,8 @@ const Calendar = () => {
 						prev.pop();
 					}
 				}
-        if (month[month.length - 1].day !== "Saturday") {
-          console.log(month[month.length - 1].day);
+				if (month[month.length - 1].day !== "Saturday") {
+					console.log(month[month.length - 1].day);
 					while (month[month.length - 1].day !== "Saturday") {
 						let primero = next[0];
 						month.push(primero);
@@ -37,11 +37,8 @@ const Calendar = () => {
 					}
 				}
 			}
-    })
+		});
 	}, []);
-
-
-	
 
 	const monthName = (monthNumer) => {
 		switch (monthNumer) {
