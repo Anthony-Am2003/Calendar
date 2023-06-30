@@ -1,33 +1,22 @@
-import { GET_MONTHS } from "./action-types";
-<<<<<<< HEAD
+import { GET_DAYS } from "./action-types";
+import { getDaysMd } from "./reducerMd/getDaysMd";
 
 const initialState = {
-  meses: [],
-  dia: [],
-=======
-import { getMonthRd } from "./reducerMd/getMonth";
-
-const initialState = {
-   meses: [],
-   dia: [],
+   fullYear: [], // Contiene 12 meses.
+   showedMonths: {
+      prevMonth: [],
+      actualMonth: [], // Trae el mes actual y prev/next para acomodar la vista.
+      nextMonth: []
+   }
 }
 
 const reducer = (state = initialState, action) => {
    switch (action.type) {
-      case GET_MONTHS:
-         return getMonthRd(state, action);
+      case GET_DAYS:
+         return getDaysMd(state, action);
+
       default: return { ...state }
    }
->>>>>>> bec4343096aa607c4346d430a79308223d1263c8
-};
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_MONTHS:
-      return console.log("first");
-    default:
-      return { ...state };
-  }
 };
 
 export default reducer;
