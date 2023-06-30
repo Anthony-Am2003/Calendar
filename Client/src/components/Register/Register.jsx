@@ -83,7 +83,7 @@ const Register = () => {
 					class='mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8'
 					onSubmit={handleSumbit}
 				>
-					<p class='text-center text-lg font-medium'>Create your account</p>
+					<p class='text-center text-lg font-medium font-[Poppins]'>Create your account</p>
 					<div>
 						<label for='text' class='sr-only'>
 							Username
@@ -91,14 +91,14 @@ const Register = () => {
 						<div class='relative'>
 							<input
 								type='text'
-								class='w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white'
+								class='w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]'
 								placeholder='Enter username'
 								onBlur={handleBlurUsername}
 								name='username'
 							/>
 						</div>
-						{errors?.username && <p>{errors.username}</p>}
-						{errors?.userLength && <p>{errors.userLength}</p>}
+						{errors?.username && <p class='text-sm text-gray-420 font-[Poppins]'>{errors.username}</p>}
+						{errors?.userLength && <p class='text-sm text-gray-420 font-[Poppins]'>{errors.userLength}</p>}
 					</div>
 
 					<div>
@@ -108,7 +108,7 @@ const Register = () => {
 						<div class='relative'>
 							<input
 								type='email'
-								class='w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white'
+								class='w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]'
 								placeholder='Enter email'
 								onBlur={handleBlurEmail}
 								name='email'
@@ -130,8 +130,8 @@ const Register = () => {
 								</svg>
 							</span>
 						</div>
-						{errors?.email && <p>{errors.email}</p>}
-						{errors?.email2 && <p>{errors.email2}</p>}
+						{errors?.email && <p class='text-sm text-gray-420 font-[Poppins]'>{errors.email}</p>}
+						{errors?.email2 && <p class='text-sm text-gray-420 font-[Poppins]'>{errors.email2}</p>}
 					</div>
 
 					<div>
@@ -142,7 +142,7 @@ const Register = () => {
 						<div class='relative'>
 							<input
 								type='password'
-								class='w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white'
+								class='w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]'
 								placeholder='Enter password'
 								onBlur={handleBlurPassword}
 								name='password'
@@ -171,7 +171,7 @@ const Register = () => {
 								</svg>
 							</span>
 						</div>
-						{errors?.password && <p>{errors.password}</p>}
+						{errors?.password && <p class='text-sm text-gray-420 font-[Poppins]'>{errors.password}</p>}
 					</div>
 
 					<div>
@@ -182,7 +182,7 @@ const Register = () => {
 						<div class='relative'>
 							<input
 								type='password'
-								class='w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white'
+								class='w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]'
 								placeholder='Repeat password'
 								onBlur={handleBlurPassword}
 								name='passwordRepeated'
@@ -211,7 +211,7 @@ const Register = () => {
 								</svg>
 							</span>
 						</div>
-						{errors?.passwordMatch && <p>{errors.passwordMatch}</p>}
+						{errors?.passwordMatch && <p class='text-sm text-gray-420 font-[Poppins]'>{errors.passwordMatch}</p>}
 					</div>
 					{!errors.username &&
 					!errors.userLength &&
@@ -225,14 +225,14 @@ const Register = () => {
 					!errors.passwordLetter ? (
 						<button
 							type='submit'
-							class='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white'
+							class='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white font-[Poppins]'
 						>
 							Sign up
 						</button>
 					) : (
 						<button
 							type='submit'
-							class='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white disabled:opacity-30'
+							class='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white disabled:opacity-30 font-[Poppins]'
 							disabled
 						>
 							Sign up
@@ -247,8 +247,8 @@ const Register = () => {
 					errors.passwordSymbols ||
 					errors.passwordNumber ||
 					errors.passwordMatch ||
-					errors.passwordLetter) ? (<h1>Check your errors</h1>) : <h1></h1>}
-					<p class='text-center text-sm text-gray-500'>
+					errors.passwordLetter) ? (<h1 class='text-sm text-gray-420 font-[Poppins]'>Check your errors</h1>) : <h1></h1>}
+					<p class='text-center text-sm text-gray-500 font-[Poppins]'>
 						Have already an account?
 						<Link to='/login'>
 							<button class='underline' href=''>
