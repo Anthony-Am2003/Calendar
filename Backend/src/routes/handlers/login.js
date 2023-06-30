@@ -1,6 +1,4 @@
-const bcrypt = require("bcrypt");
-const { User } = require("../../db");
-const jwt = require("jsonwebtoken");
+const loginController = require("../controllers/loginController");
 
 module.exports = async (req, res, next) => {
   try {
@@ -10,36 +8,9 @@ module.exports = async (req, res, next) => {
       return res.status(400).json({ error: "Missing data." });
     }
 
-    const userFound = await User.findOne({ where: { username } });
+    const data = loginController(username, password);
 
-    if (userFound) {
-      const isPasswordCorrect = await bcrypt.compare(
-        password,
-        userFound.passwordHash
-      );
-
-      if (!(userFound && isPasswordCorrect)) {
-        return res.status(401).json({ error: "Invalid username or password." });
-      }
-
-      const userForToken = {
-        id: userFound.id,
-        username: userFound.username,
-      };
-
-      const token = await jwt.sign(userForToken, process.env.SECRET);
-
-      return res.status(200).json({
-        data: {
-          id: userFound.id,
-          username: userFound.username,
-          token,
-        },
-        message: "Loggin in...",
-      });
-    } else {
-      return res.status(401).json({ error: "Invalid username or password." });
-    }
+    return res.status(200).json(data);
   } catch ({ message }) {
     return res.status(500).json({ error: message });
   }
