@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -6,6 +7,15 @@ import { getDays, getMonth } from "../../Redux/actions";
 const Calendar = () => {
   const dispatch = useDispatch();
 
+=======
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {getDays} from "../../Redux/actions";
+import SearchBar from "../SearchBar/SearchBar";
+
+const Calendar = () => {
+  const dispatch = useDispatch();
+>>>>>>> bec4343096aa607c4346d430a79308223d1263c8
   useEffect(() => {
     const fecha = new Date();
     const month = fecha.getMonth();
@@ -17,8 +27,8 @@ const Calendar = () => {
     <div className="container mx-auto">
       <div className="wrapper bg-white rounded shadow w-full ">
         <div className="header flex justify-between border-b p-2">
-          <span className="text-4xl font-extralight font-[Poppins] flex items-center  w-full justify-center ">
-            2020 July
+          <span className="text-4xl font-extralight font-[Poppins] flex items-center w-full justify-around  ">
+            2020 July <SearchBar />
           </span>
           <div className="buttons">
             <button className="p-1">
