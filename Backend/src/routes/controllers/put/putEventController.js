@@ -1,11 +1,21 @@
-const { Events } = require('../../db');
-const moment = require('moment');
+const { Events } = require("../../../db");
+const moment = require("moment");
 
-const putEvent = async (id, name, initialDate, finalDate, image, description, location, reminder, category) => {
+module.exports = async (
+  id,
+  name,
+  initialDate,
+  finalDate,
+  image,
+  description,
+  location,
+  reminder,
+  category
+) => {
   const eventToPut = await Events.findByPk(id);
 
   if (!eventToPut) {
-    throw new Error('Este evento no existe');
+    throw new Error("Este evento no existe");
   }
 
   const allDates = [];
@@ -27,8 +37,6 @@ const putEvent = async (id, name, initialDate, finalDate, image, description, lo
     location: location,
     reminder: reminder,
     category: category,
-    allDates: allDates
+    allDates: allDates,
   });
 };
-
-module.exports = { putEvent };

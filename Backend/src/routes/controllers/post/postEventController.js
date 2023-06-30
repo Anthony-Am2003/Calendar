@@ -1,7 +1,7 @@
-const { Events } = require("../../db.js");
+const { Events } = require("../../../db.js");
 const moment = require("moment");
 
-const postEventController = async( 
+module.exports = async (
   name,
   initialDate,
   finalDate,
@@ -35,14 +35,3 @@ const postEventController = async(
 
   return newEvent;
 };
-
-module.exports = {
-  postEventController,
-};
-
-
-
-
-
-
-

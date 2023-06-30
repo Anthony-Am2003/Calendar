@@ -1,4 +1,4 @@
-const daysController = require("../controllers/daysController");
+const daysController = require("../../controllers/get/getDaysController");
 
 module.exports = async (req, res) => {
   try {

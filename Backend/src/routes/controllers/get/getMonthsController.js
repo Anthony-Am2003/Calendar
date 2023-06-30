@@ -1,4 +1,4 @@
-const monthsController = () => {
+module.exports = () => {
   const months = [
     "January",
     "February",
@@ -15,5 +15,3 @@ const monthsController = () => {
   ];
   return months;
 };
-
-module.exports = { monthsController };
