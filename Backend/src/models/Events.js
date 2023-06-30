@@ -12,9 +12,17 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        initialDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        finalDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
         image: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         description: {
             type: DataTypes.TEXT,
@@ -31,14 +39,6 @@ module.exports = (sequelize) => {
         category: {
             type: DataTypes.STRING,
             allowNull: true,
-        },
-        initialDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        finalDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
         },
         completed: {
             type: DataTypes.BOOLEAN,
