@@ -1,6 +1,6 @@
-const { Events } = require('../../db');
+const { Events } = require("../../../db");
 
-const getEventsInRange = async (date) => {
+module.exports = async (date) => {
   const events = await Events.findAll({
     where: {
       allDates: {
@@ -11,5 +11,3 @@ const getEventsInRange = async (date) => {
 
   return events;
 };
-
-module.exports = { getEventsInRange };
