@@ -1,6 +1,13 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import { getMonthsPerYear } from "../../Redux/actions";
 const Calendars = () => {
   const [year, setYear] = useState(2023);
+
+   // const currentYear = useSelector((state) => state.currentYear)
+   // useEffect(() => {
+   //    dispatch(getMonthsPerYear(currentYear))
+   // }, [currentYear])
+
   const generateCalendars = () => {
     const months = [
       "January",
