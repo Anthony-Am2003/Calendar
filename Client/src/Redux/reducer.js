@@ -1,11 +1,17 @@
+import { GET_MONTHS } from "./action-types";
+
 const initialState = {
-   testing: "test"
-}
+  meses: [],
+  dia: [],
+};
 
 const reducer = (state = initialState, action) => {
-   switch (action.type) {
-      default: return { ...state }
-   }
+  switch (action.type) {
+    case GET_MONTHS:
+      return console.log("first");
+    default:
+      return { ...state };
+  }
 };
 
 export default reducer;

@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { getDays, getMonth } from "../../Redux/actions";
+
 const Calendar = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fecha = new Date();
+    const month = fecha.getMonth();
+    const year = fecha.getFullYear();
+    dispatch(getDays(month, year));
+  }, []);
+
   return (
     <div className="container mx-auto">
       <div className="wrapper bg-white rounded shadow w-full ">
@@ -14,7 +28,8 @@ const Calendar = () => {
                 height="1em"
                 viewBox="0 0 16 16"
                 className="bi bi-arrow-left-circle"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -36,7 +51,8 @@ const Calendar = () => {
                 height="1em"
                 viewBox="0 0 16 16"
                 className="bi bi-arrow-right-circle"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
