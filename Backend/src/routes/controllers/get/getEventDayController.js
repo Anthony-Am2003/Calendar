@@ -1,10 +1,11 @@
-const { Events } = require("../../../db");
+const { Events, sequelize } = require("../../../db");
+const { Op } = require('sequelize');
 
 module.exports = async (date) => {
   const events = await Events.findAll({
     where: {
       allDates: {
-        $contains: [date],
+        [Op.contains]: [date],
       },
     },
   });
