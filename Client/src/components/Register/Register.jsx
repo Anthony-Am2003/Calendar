@@ -255,7 +255,7 @@ const Register = () => {
 					errors.passwordLetter) ? (<h1 className='text-sm text-gray-420 font-[Poppins]'>Check your errors</h1>) : <h1></h1>}
 					<p className='text-center text-sm text-gray-500 font-[Poppins]'>
 						{`Have already an account? `}
-						<Link to='/login'>
+						<Link to='/'>
 							<button className='underline' href=''>
 								Sign in
 							</button>
