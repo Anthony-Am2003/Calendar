@@ -16,6 +16,13 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             allowNull: false,
         },
+        hour: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                is: /^([01]\d|2[0-3]):([0-5]\d)$/ // Formato "HH:MM" (00 a 23 y min de 00 a 59)
+            }
+        },
         finalDate: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -33,8 +40,8 @@ module.exports = (sequelize) => {
             allowNull: true,
         },
         reminder: {
-            type: DataTypes.DATE,
-            allowNull: true,
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
         },
         category: {
             type: DataTypes.STRING,
@@ -46,7 +53,7 @@ module.exports = (sequelize) => {
         },
         allDates: {
             type: DataTypes.ARRAY(DataTypes.DATE),
-            allowNull:false,
+            allowNull: false,
         },
     }, { timestamps: true });
 };
