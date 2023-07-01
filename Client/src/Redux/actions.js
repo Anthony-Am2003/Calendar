@@ -5,7 +5,7 @@ import {
   GET_MONTHS,
   GET_MONTHS_PER_YEAR,
   GET_EVENT,
-  GET_DETAIL_DAY,
+  GET_DETAIL_EVENT,
 } from "./action-types";
 
 const URL = "http://localhost:7286";
@@ -135,6 +135,18 @@ export const getEvents = () => {
       const eventsData = await axios.get(`${URL}/events`);
       const eventos = eventsData.data;
       return dispatch({type: GET_EVENT, payload: eventos});
+    } catch (error) {
+      alert(error.response.data.error);
+    }
+  };
+};
+
+export const getDetail = (name) => {
+  return async function (dispatch) {
+    try {
+      const detailEvents = await axios.get(`${URL}/events/name?name=${name}`);
+      const detailEventsData = detailEvents.data;
+      return dispatch({type: GET_DETAIL_EVENT, payload: detailEventsData});
     } catch (error) {
       alert(error.response.data.error);
     }
