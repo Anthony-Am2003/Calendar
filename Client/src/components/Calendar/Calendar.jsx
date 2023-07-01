@@ -42,6 +42,7 @@ const Calendar = () => {
 			}
 		}
 	}
+
 	const monthName = (monthNumer) => {
 		switch (monthNumer) {
 			case 0:
