@@ -11,6 +11,7 @@ const getDays = require("./handlers/get/getDays");
 const getEventsByName = require("./handlers/get/getEventByName");
 const getEventDay = require("./handlers/get/getEventDay");
 const getMonthsOfYear = require("./handlers/get/getMonthsOfYear");
+const getAlerts = require('./handlers/get/getAlertsEvents')
 //---------------
 
 // POST ROUTES
@@ -36,5 +37,6 @@ router.post("/user/login", postLogin);
 router.post("/user/register", postRegister);
 
 router.put("/eventput", putEvent);
+router.get('/alerts', getAlerts)
 
 module.exports = router;
