@@ -3,6 +3,10 @@ const { User } = require("../../../db");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (username, password) => {
+  if (!(username || password)) {
+    throw new Error("Missing data.");
+  }
+
   const userToFind = await User.findOne({ where: { username } });
 
   if (userToFind) {

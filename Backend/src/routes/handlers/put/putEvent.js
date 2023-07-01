@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       reminder,
       category,
     } = req.body;
-    console.log(name);
+
     const EventUpdate = await putEvent(
       id,
       name,
