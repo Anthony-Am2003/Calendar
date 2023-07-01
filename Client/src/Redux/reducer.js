@@ -1,5 +1,6 @@
 import {
   GET_DAYS,
+  GET_DETAIL_EVENT,
   GET_EVENT,
   GET_MONTHS,
   GET_MONTHS_PER_YEAR,
@@ -13,8 +14,6 @@ import { getDaysMd } from "./reducerMd/getDaysMd";
 import { getMonthsMd } from "./reducerMd/getMonthsMd";
 import { getMonthsPerYearMd } from "./reducerMd/getMonthsPerYearMd";
 import { postEvent } from "./reducerMd/postEvent";
-import { postLogin } from "./reducerMd/postLogin";
-import { logout } from "./reducerMd/logout";
 
 const initialState = {
   allMonths: [], // Contiene 12 meses.
@@ -40,10 +39,6 @@ const initialState = {
   },
   currentYear: undefined,
   events: [],
-  userSession: {
-    token: "",
-    username: "",
-  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -58,11 +53,6 @@ const reducer = (state = initialState, action) => {
       return getAllEventsMd(state, action);
     case POST_EVENT:
       return postEvent(state, action);
-
-    case LOGIN:
-      return postLogin(state, action);
-    case LOGOUT:
-      return logout(state, action);
 
     default:
       return { ...state };

@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-import { login } from "../../Redux/actions";
-
-const URL = "http://localhost:7286";
 
 const Register = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { userSession } = useSelector((state) => state);
   const [errors, setErrors] = useState({});
   const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
   });
+  const URL = "http://localhost:7286";
 
   const handleBlurUsername = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -36,21 +28,15 @@ const Register = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    const userDB = {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-    };
     try {
-      const { data } = await axios.post(`${URL}/user/register`, userDB);
-
-      window.alert(data.message);
-
-      dispatch(login({ username: userDB.username, password: userDB.password }));
-
-      navigate("/month");
+      const userDB = {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      };
+      await axios.post(`${URL}/user/register`, userDB);
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 
@@ -88,18 +74,6 @@ const Register = () => {
       (errors.passwordMatch = "Passwords don't match");
     return errors;
   };
-
-  useEffect(() => {
-    const loggedUser = window.localStorage.getItem("LoggedCalendarAppUser");
-    if (loggedUser) {
-      const user = JSON.parse(loggedUser);
-      if (user.token) {
-        setTimeout(() => {
-          navigate("/month");
-        }, 2500);
-      }
-    }
-  }, []);
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 bg-white">
