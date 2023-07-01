@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { login } from "../../Redux/actions";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [errors, setErrors] = useState({});
   const [errorsInput, setErrorsInput] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -48,16 +51,16 @@ const Login = () => {
   // 	return errors;
   // };
 
-  useEffect(() => {
-    const loggedUser = window.localStorage.getItem("LoggedCalendarAppUser");
-    if (loggedUser) {
-      const user = JSON.parse(loggedUser);
+  // useEffect(() => {
+  //   const loggedUser = window.localStorage.getItem("LoggedCalendarAppUser");
+  //   if (loggedUser) {
+  //     const user = JSON.parse(loggedUser);
 
-      setTimeout(() => {
-        navigate("/month");
-      }, 2500);
-    }
-  }, []);
+  //     setTimeout(() => {
+  //       navigate("/month");
+  //     }, 2500);
+  //   }
+  // }, []);
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 bg-white">
