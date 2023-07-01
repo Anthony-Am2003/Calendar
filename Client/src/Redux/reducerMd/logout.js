@@ -1,4 +1,4 @@
-export const postLogin = (state, { payload }) => {
+export const logout = (state, { payload }) => {
   return {
     ...state,
     userSession: {
