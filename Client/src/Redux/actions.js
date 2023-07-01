@@ -7,6 +7,8 @@ import {
   GET_EVENT,
   GET_DETAIL_DAY,
   POST_EVENT,
+  LOGIN,
+  LOGOUT,
 } from "./action-types";
 
 const URL = "http://localhost:7286";
@@ -152,4 +154,30 @@ export const getEvents = () => {
       alert(error.response.data.error);
     }
   };
+};
+
+export const login = (userDB, setErrorsInput) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${URL}/user/login`, userDB);
+
+      window.localStorage.setItem(
+        "LoggedCalendarAppUser",
+        JSON.stringify(data.userData)
+      );
+
+      window.alert(data.message);
+
+      return dispatch({ type: LOGIN, payload: data.userData });
+    } catch (error) {
+      setErrorsInput(true);
+      console.log(error.message);
+    }
+  };
+};
+
+export const logout = () => {
+  window.localStorage.removeItem("LoggedCalendarAppUser");
+
+  return { type: LOGOUT, payload: "" };
 };

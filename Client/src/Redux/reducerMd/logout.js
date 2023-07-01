@@ -2,8 +2,9 @@ export const postLogin = (state, { payload }) => {
   return {
     ...state,
     userSession: {
-      token: payload,
+      id: payload,
       username: payload,
+      token: payload,
     },
   };
 };

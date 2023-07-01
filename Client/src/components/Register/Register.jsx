@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userSession } = useSelector((state) => state);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
@@ -39,15 +43,23 @@ const Register = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
+    const userDB = {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    };
     try {
-      const userDB = {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-      };
-      await axios.post(`${URL}/user/register`, userDB);
+      const { data } = await axios.post(`${URL}/user/register`, userDB);
+
+      window.alert(data.message);
+
+      dispatch(login({ username: userDB.username, password: userDB.password }));
+
+      setTimeout(() => {
+        navigate("/month");
+      }, 2500);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 

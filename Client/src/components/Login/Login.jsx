@@ -30,17 +30,16 @@ const Login = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    try {
-      const userDB = {
-        username: user.username,
-        password: user.password,
-      };
-      const { data } = await axios.post(`${URL}/user/login`, userDB);
-      console.log(data.message);
-    } catch (error) {
-      setErrorsInput(true);
-      console.log(error.response.data?.error);
-    }
+    const userDB = {
+      username: user.username,
+      password: user.password,
+    };
+
+    await dispatch(login(userDB, setErrorsInput));
+
+    setTimeout(() => {
+      navigate("/month");
+    }, 2500);
   };
 
   // const validation = (data) => {
