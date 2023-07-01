@@ -10,9 +10,13 @@ module.exports = async (
   description,
   location,
   reminder,
-  category
+  category,
+  hour
 ) => {
   const eventToPut = await Events.findByPk(id);
+  
+  if(!initialDate) initialDate = eventToPut['initialDate']
+  if(!finalDate) finalDate = eventToPut['finalDate']
 
   if (!eventToPut) {
     throw new Error("Este evento no existe");
@@ -64,6 +68,10 @@ module.exports = async (
 
   if (allDates.length > 0) {
     updatedValues.allDates = allDates;
+  }
+
+  if (hour) {
+    updatedValues.hour = hour;
   }
 
   await eventToPut.update(updatedValues);

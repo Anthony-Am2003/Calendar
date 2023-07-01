@@ -10,9 +10,10 @@ module.exports = async (req, res) => {
     location,
     reminder,
     category,
+    hour,
   } = req.body;
   try {
-    if (!name || !initialDate || !finalDate)
+    if (!name || !initialDate || !finalDate || !hour)
       throw Error("Completar la información");
 
     await postEventController(
@@ -23,10 +24,11 @@ module.exports = async (req, res) => {
       description,
       location,
       reminder,
-      category
+      category,
+      hour,
     );
     res.status(200).json("Agregado con exito!");
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({error: error.message});
   }
 };
