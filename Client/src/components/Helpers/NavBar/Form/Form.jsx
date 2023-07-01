@@ -16,6 +16,7 @@ const Form = () => {
   const dispatch = useDispatch();
   const handleChange = (e) => {
     e.preventDefault();
+    console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
