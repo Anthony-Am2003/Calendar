@@ -1,4 +1,4 @@
-const { getAllEvents } = require("./getAllEventsController");
+const  getAllEvents  = require("./getAllEventsController");
 
 module.exports = async (name) => {
   const totalEvents = await getAllEvents();
