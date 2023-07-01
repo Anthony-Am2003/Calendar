@@ -1,6 +1,14 @@
-import React, {useState} from "react";
-const Calendars = () => {
+import React, {useEffect, useState} from "react";
+import {getMonthsPerYear} from "../../Redux/actions";
+
+const YCalendar = () => {
   const [year, setYear] = useState(2023);
+
+  // const currentYear = useSelector((state) => state.currentYear)
+  // useEffect(() => {
+  //    dispatch(getMonthsPerYear(currentYear))
+  // }, [currentYear])
+
   const generateCalendars = () => {
     const months = [
       "January",
@@ -86,12 +94,12 @@ const Calendars = () => {
     e.preventDefault();
     setYear(year + 1);
   };
+
   const calendars = generateCalendars();
+
   return (
     <div className="min-h-screen p-5 bg-gray-200">
-      <h1
-        href="/"
-        className="font-[Poppins] items-center text-6xl mb-4  h-20 flex justify-center w-full ">
+      <h1 className="font-[Poppins] items-center text-6xl mb-4  h-20 flex justify-center w-full ">
         <button
           onClick={handleClickPrev}
           className="p-1 mr-20 hover:scale-110 duration-200">
@@ -116,7 +124,9 @@ const Calendars = () => {
             />
           </svg>
         </button>
-        <a href="/" className="cursor-pointer hover:scale-110 duration-200">
+        <a
+          href="/month"
+          className="cursor-pointer hover:scale-110 duration-200">
           {year}
         </a>
         <button
@@ -127,7 +137,7 @@ const Calendars = () => {
             fill="black"
             height="1em"
             viewBox="0 0 16 16"
-            class="bi bi-arrow-right-circle"
+            className="bi bi-arrow-right-circle"
             xmlns="http://www.w3.org/2000/svg">
             <path
               fill-rule="evenodd"
@@ -148,4 +158,4 @@ const Calendars = () => {
     </div>
   );
 };
-export default Calendars;
+export default YCalendar;

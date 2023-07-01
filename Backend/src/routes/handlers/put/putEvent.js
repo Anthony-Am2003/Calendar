@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
       location,
       reminder,
       category,
+      hour
     } = req.body;
 
     const EventUpdate = await putEvent(
@@ -23,7 +24,8 @@ module.exports = async (req, res) => {
       description,
       location,
       reminder,
-      category
+      category,
+      hour,
     );
     res.status(200).send("Se Edito con exito");
   } catch (error) {

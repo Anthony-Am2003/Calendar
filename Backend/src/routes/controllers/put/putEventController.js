@@ -10,9 +10,13 @@ module.exports = async (
   description,
   location,
   reminder,
-  category
+  category,
+  hour
 ) => {
   const eventToPut = await Events.findByPk(id);
+  
+  if(!initialDate) initialDate = eventToPut['initialDate']
+  if(!finalDate) finalDate = eventToPut['finalDate']
 
   if (!eventToPut) {
     throw new Error("Este evento no existe");
@@ -28,15 +32,47 @@ module.exports = async (
     startDate.add(1, "day");
   }
 
-  await eventToPut.update({
-    name: name,
-    initialDate: initialDate,
-    finalDate: finalDate,
-    image: image,
-    description: description,
-    location: location,
-    reminder: reminder,
-    category: category,
-    allDates: allDates,
-  });
+  const updatedValues = {};
+
+  if (name) {
+    updatedValues.name = name;
+  }
+
+  if (initialDate) {
+    updatedValues.initialDate = initialDate;
+  }
+
+  if (finalDate) {
+    updatedValues.finalDate = finalDate;
+  }
+
+  if (image) {
+    updatedValues.image = image;
+  }
+
+  if (description) {
+    updatedValues.description = description;
+  }
+
+  if (location) {
+    updatedValues.location = location;
+  }
+
+  if (reminder) {
+    updatedValues.reminder = reminder;
+  }
+
+  if (category) {
+    updatedValues.category = category;
+  }
+
+  if (allDates.length > 0) {
+    updatedValues.allDates = allDates;
+  }
+
+  if (hour) {
+    updatedValues.hour = hour;
+  }
+
+  await eventToPut.update(updatedValues);
 };
