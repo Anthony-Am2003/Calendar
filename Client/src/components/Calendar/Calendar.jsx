@@ -4,7 +4,7 @@ import { getDays, getMonths, getMonthsPerYear } from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Calendar = () => {
-	const dispatch = useDispatch();
+const dispatch = useDispatch();
 
 	const week = [0, 1, 2, 3, 4, 5, 6];
 	const { showedMonths } = useSelector((state) => state);
