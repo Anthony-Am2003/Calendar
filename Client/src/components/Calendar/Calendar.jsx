@@ -4,7 +4,7 @@ import { getDays, getMonths, getMonthsPerYear } from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Calendar = () => {
-const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 	const week = [0, 1, 2, 3, 4, 5, 6];
 	const { showedMonths } = useSelector((state) => state);
@@ -16,7 +16,7 @@ const dispatch = useDispatch();
 	const dayNumberTd = fecha.getDate();
 	const monthNumberTd = fecha.getMonth();
 	const yearNumberTd = fecha.getFullYear();
-	const today = `${yearNumberTd}-${monthNumberTd > 9 ? monthNumberTd + 1 : "0" + (monthNumberTd + 1)}-${dayNumberTd}`;
+	const today = `${yearNumberTd}-${monthNumberTd > 9 ? monthNumberTd + 1 : "0" + (monthNumberTd + 1)}-${dayNumberTd > 9 ? dayNumberTd : "0" + (dayNumberTd)}`;
 	const [monthNumber, setMonthNumber] = useState(monthNumberTd);
 	const [yearNumber, setYearNumber] = useState(yearNumberTd);
 
@@ -110,7 +110,7 @@ const dispatch = useDispatch();
 			<div className='wrapper bg-white rounded shadow w-full '>
 				<div className='header flex justify-between border-b p-2'>
 					<span className='text-4xl font-extralight font-[Poppins] flex items-center w-full justify-around  '>
-						<a href='/calendars' className='btn btn-ghost'>
+						<a href='/year' className='btn btn-ghost'>
 							<svg xmlns='http://www.w3.org/2000/svg' fill='#000000' width='30px' height='30px' viewBox='0 0 1920 1920'>
 								<path
 									d='M1411.824 0c31.17 0 56.47 25.3 56.47 56.471v56.47h169.412c93.403 0 169.412 76.01 169.412 169.412V1920H113V282.353c0-93.402 76.009-169.412 169.412-169.412h169.41v-56.47c0-31.172 25.3-56.47 56.472-56.47s56.47 25.298 56.47 56.47v56.47h790.589v-56.47c0-31.172 25.299-56.47 56.47-56.47Zm282.352 564.705H225.942v1242.353h1468.234V564.705Zm-1016.47 677.648v338.824H338.882v-338.824h338.824Zm451.765 0v338.824H790.647v-338.824h338.824Zm451.764 0v338.824h-338.823v-338.824h338.823Zm-1016.47 112.941H451.824v112.941h112.941v-112.941Zm451.764 0H903.588v112.941h112.941v-112.941Zm451.765 0h-112.941v112.941h112.941v-112.941ZM677.706 790.588v338.824H338.882V790.588h338.824Zm451.765 0v338.824H790.647V790.588h338.824Zm451.764 0v338.824h-338.823V790.588h338.823ZM564.765 903.53H451.824v112.941h112.941V903.53Zm451.764 0H903.588v112.941h112.941V903.53Zm451.765 0h-112.941v112.941h112.941V903.53ZM451.823 225.882H282.412c-31.06 0-56.47 25.3-56.47 56.471v169.412h1468.234V282.353c0-31.172-25.411-56.47-56.47-56.47h-169.412v56.47c0 31.172-25.3 56.471-56.47 56.471-31.172 0-56.471-25.299-56.471-56.47v-56.472H564.765v56.471c0 31.172-25.3 56.471-56.471 56.471-31.171 0-56.471-25.299-56.471-56.47v-56.472Z'
@@ -118,7 +118,7 @@ const dispatch = useDispatch();
 								/>
 							</svg>
 						</a>
-						<div className='w-1/3 flex flex-row justify-between'>
+						<div className='w-1/4 flex flex-row justify-between'>
 							<button onClick={handleClickPrev} className='p-1 mr-4 hover:scale-110 duration-200'>
 								<svg width='0.5em' fill='black' height='1em' viewBox='0 0 16 16' className='bi bi-arrow-left-circle' xmlns='http://www.w3.org/2000/svg'>
 									<path fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z' />
@@ -126,7 +126,7 @@ const dispatch = useDispatch();
 									<path fill-rule='evenodd' d='M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z' />
 								</svg>
 							</button>
-							<span className='text-center'>{`${monthName(monthNumber)} ${yearNumber}`}</span>
+							<span className='text-center'>{`${monthName(monthNumber).slice(0,3)} ${yearNumber}`}</span>
 							<button onClick={handleClickNext} className='p-1 ml-4 hover:scale-110 duration-300'>
 								<svg width='0.5em' fill='black' height='1em' viewBox='0 0 16 16' class='bi bi-arrow-right-circle' xmlns='http://www.w3.org/2000/svg'>
 									<path fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z' />
@@ -290,7 +290,7 @@ const dispatch = useDispatch();
 										<td key={day.date} className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
 											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='h-5 w-full'>
-													<div className={today === day.fullDate ? "mx-auto w-16 rounded- border-2 border-red-700" : "text-gray-500"}>{day.date}</div>
+													<div className={today === day.fullDate ? "mx-auto w-6 h-6 rounded-full bg-blue-600" : "text-gray-500"}>{day.date}</div>
 												</div>
 												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
