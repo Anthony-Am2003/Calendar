@@ -37,7 +37,7 @@ const initialState = {
   },
   currentYear: undefined,
   events: [],
-  eventDetail: {},
+  eventDetail: [],
 };
 
 const reducer = (state = initialState, action) => {
