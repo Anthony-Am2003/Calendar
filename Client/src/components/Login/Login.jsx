@@ -3,21 +3,16 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 const Login = () => {
-  const [errors, setErrors] = useState({});
-  const [errorsInput, setErrorsInput] = useState(false);
+  const [errorsInput, setErrorsInput] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
   const URL = "http://localhost:7286";
-  // 	useEffect(()=> {
-  // 		setErrors(validation(user))
-  // }, [user])
 
   const handleBlur = (e) => {
     setUser({...user, [e.target.name]: e.target.value});
-    // setErrors(validation({...user, [e.target.name]: e.target.value}))
   };
 
   const handleShowPassword = (e) => {
@@ -33,6 +28,7 @@ const Login = () => {
         password: user.password,
       };
       const {data} = await axios.post(`${URL}/user/login`, userDB);
+			setErrorsInput(false);
       console.log(data.message);
     } catch (error) {
       setErrorsInput(true);
