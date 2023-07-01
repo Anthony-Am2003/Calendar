@@ -4,12 +4,15 @@ import {
   GET_MONTHS,
   GET_MONTHS_PER_YEAR,
   POST_EVENT,
+  LOGIN,
+  LOGOUT,
 } from "./action-types";
-import {getAllEventsMd} from "./reducerMd/getAllEventsMd";
-import {getDaysMd} from "./reducerMd/getDaysMd";
-import {getMonthsMd} from "./reducerMd/getMonthsMd";
-import {getMonthsPerYearMd} from "./reducerMd/getMonthsPerYearMd";
-import {postEvent} from "./reducerMd/postEvent";
+import { getAllEventsMd } from "./reducerMd/getAllEventsMd";
+import { getDaysMd } from "./reducerMd/getDaysMd";
+import { getMonthsMd } from "./reducerMd/getMonthsMd";
+import { getMonthsPerYearMd } from "./reducerMd/getMonthsPerYearMd";
+import { postEvent } from "./reducerMd/postEvent";
+import { postLogin } from "./reducerMd/postLogin";
 
 const initialState = {
   allMonths: [], // Contiene 12 meses.
@@ -35,6 +38,10 @@ const initialState = {
   },
   currentYear: undefined,
   events: [],
+  userSession: {
+    token: "",
+    username: "",
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -50,8 +57,11 @@ const reducer = (state = initialState, action) => {
     case POST_EVENT:
       return postEvent(state, action);
 
+    case LOGIN:
+      return postLogin(state, action);
+
     default:
-      return {...state};
+      return { ...state };
   }
 };
 

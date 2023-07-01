@@ -9,3 +9,9 @@ export const GET_DETAIL_DAY = "GET_DETAIL_DAY";
 export const POST_EVENT = "POST_EVENT";
 
 export const GET_EVENT = "GET_EVENT";
+
+export const LOGIN = "LOGIN";
+
+export const REGISTER = "REGISTER";
+
+export const LOGOUT = "LOGOUT";

@@ -15,7 +15,7 @@ module.exports = async (username, password) => {
       userToFind.passwordHash
     );
 
-    if (!(userToFind && isPasswordCorrect)) {
+    if (!isPasswordCorrect) {
       throw new Error("Invalid username or password.");
     }
 
@@ -24,10 +24,12 @@ module.exports = async (username, password) => {
       username: userToFind.username,
     };
 
-    const token = await jwt.sign(userForToken, process.env.SECRET);
+    const token = await jwt.sign(userForToken, process.env.SECRET, {
+      expiresIn: 60 * 60 * 24 * 7,
+    });
 
     return {
-      data: {
+      userData: {
         id: userToFind.id,
         username: userToFind.username,
         token,

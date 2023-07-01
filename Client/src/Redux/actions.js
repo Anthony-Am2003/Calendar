@@ -7,6 +7,8 @@ import {
   GET_EVENT,
   GET_DETAIL_DAY,
   POST_EVENT,
+  LOGIN,
+  LOGOUT,
 } from "./action-types";
 
 const URL = "http://localhost:7286";
@@ -69,7 +71,7 @@ export const getDays = (monthNumber, yearNumber) => {
         months.nextMonth = nextMonth;
       }
 
-      return dispatch({type: GET_DAYS, payload: months});
+      return dispatch({ type: GET_DAYS, payload: months });
     } catch (error) {
       return console.log(error);
     }
@@ -81,7 +83,7 @@ export const getMonths = () => {
     try {
       const allMonths = (await axios.get(`${URL}/months`)).data;
 
-      return dispatch({type: GET_MONTHS, payload: allMonths});
+      return dispatch({ type: GET_MONTHS, payload: allMonths });
     } catch (error) {
       return console.log(error.message);
     }
@@ -112,7 +114,7 @@ export const getMonthsPerYear = (year) => {
         daysByMonth[prop] = response;
       }
 
-      return dispatch({type: GET_MONTHS_PER_YEAR, payload: daysByMonth});
+      return dispatch({ type: GET_MONTHS_PER_YEAR, payload: daysByMonth });
     } catch (error) {
       return console.log(error.message);
     }
@@ -135,9 +137,35 @@ export const getEvents = () => {
     try {
       const eventsData = await axios.get(`${URL}/events`);
       const eventos = eventsData.data;
-      return dispatch({type: GET_EVENT, payload: eventos});
+      return dispatch({ type: GET_EVENT, payload: eventos });
     } catch (error) {
       alert(error.response.data.error);
     }
   };
+};
+
+export const login = (userDB, setErrorsInput) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${URL}/user/login`, userDB);
+
+      window.localStorage.setItem(
+        "LoggedCalendarAppUser",
+        JSON.stringify(data.userData)
+      );
+
+      window.alert(data.message);
+
+      return dispatch({ type: LOGIN, payload: data.userData });
+    } catch (error) {
+      setErrorsInput(true);
+      console.log(error.message);
+    }
+  };
+};
+
+export const logout = () => {
+  window.localStorage.removeItem("LoggedCalendarAppUser");
+
+  return { type: LOGOUT, payload: "" };
 };
