@@ -4,6 +4,7 @@ import RegisterPage from "./views/register/register";
 import {Routes, Route} from "react-router-dom";
 import YCalendar from "./components/YCalendar/YCalendar";
 import Month from "./views/month/month";
+import Events from "./components/allEvents/events";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/year" element={<YCalendar />} />
+        <Route path="/events" element={<Events />} />
       </Routes>
     </div>
   );

@@ -6,7 +6,6 @@ import {
   GET_MONTHS_PER_YEAR,
   GET_EVENT,
   GET_DETAIL_DAY,
-  POST_EVENT,
 } from "./action-types";
 
 const URL = "http://localhost:7286";
