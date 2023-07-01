@@ -249,6 +249,7 @@ const Register = () => {
                   </svg>
                 </span>
               </button>
+							
 						</div>
 						{errors?.passwordMatch && <p className='text-sm text-gray-420 font-[Poppins]'>{errors.passwordMatch}</p>}
 					</div>
