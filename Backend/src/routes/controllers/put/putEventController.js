@@ -13,6 +13,9 @@ module.exports = async (
   category
 ) => {
   const eventToPut = await Events.findByPk(id);
+  
+  if(!initialDate) initialDate = eventToPut['initialDate']
+  if(!finalDate) finalDate = eventToPut['finalDate']
 
   if (!eventToPut) {
     throw new Error("Este evento no existe");
