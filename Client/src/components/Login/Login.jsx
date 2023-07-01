@@ -1,18 +1,26 @@
-import {useState, useEffect} from "react";
-import axios from "axios";
-import {Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { login } from "../../Redux/actions";
 
 const Login = () => {
-  const [errorsInput, setErrorsInput] = useState();
+  const [errors, setErrors] = useState({});
+  const [errorsInput, setErrorsInput] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
   const URL = "http://localhost:7286";
+  // 	useEffect(()=> {
+  // 		setErrors(validation(user))
+  // }, [user])
 
   const handleBlur = (e) => {
-    setUser({...user, [e.target.name]: e.target.value});
+    setUser({ ...user, [e.target.name]: e.target.value });
+    // setErrors(validation({...user, [e.target.name]: e.target.value}))
   };
 
   const handleShowPassword = (e) => {
@@ -22,18 +30,16 @@ const Login = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    try {
-      const userDB = {
-        username: user.username,
-        password: user.password,
-      };
-      const {data} = await axios.post(`${URL}/user/login`, userDB);
-			setErrorsInput(false);
-      console.log(data.message);
-    } catch (error) {
-      setErrorsInput(true);
-      console.log(error.response.data?.error);
-    }
+    const userDB = {
+      username: user.username,
+      password: user.password,
+    };
+
+    await dispatch(login(userDB, setErrorsInput));
+
+    setTimeout(() => {
+      navigate("/month");
+    }, 2500);
   };
 
   // const validation = (data) => {
@@ -41,6 +47,17 @@ const Login = () => {
   // 	};
   // 	return errors;
   // };
+
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem("LoggedCalendarAppUser");
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser);
+
+      setTimeout(() => {
+        navigate("/month");
+      }, 2500);
+    }
+  }, []);
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 bg-white">
@@ -51,7 +68,8 @@ const Login = () => {
         <form
           action=""
           className="mb-0 mt-2 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
-          onSubmit={handleSumbit}>
+          onSubmit={handleSumbit}
+        >
           <p className="text-center text-lg font-medium font-[Poppins]">
             Sign in to your account
           </p>
@@ -111,7 +129,8 @@ const Login = () => {
                     className="h-4 w-4 text-gray-400"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -132,7 +151,8 @@ const Login = () => {
 
           <button
             type="submit"
-            className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white font-[Poppins]">
+            className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white font-[Poppins]"
+          >
             Sign in
           </button>
           {errorsInput === true ? (
