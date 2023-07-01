@@ -44,5 +44,9 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
+        allDates: {
+            type: DataTypes.ARRAY(DataTypes.DATE),
+            allowNull:false,
+        },
     }, { timestamps: true });
 };

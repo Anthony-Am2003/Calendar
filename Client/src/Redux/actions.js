@@ -1,72 +1,117 @@
-<<<<<<< HEAD
 import axios from "axios";
 
 import {
+  GET_DAYS,
   GET_MONTHS,
-  GET_YEARS,
+  GET_MONTHS_PER_YEAR,
   GET_DETAIL_DAY,
   POST_EVENT,
-  GET_DAYS,
 } from "./action-types";
-=======
-import axios from 'axios';
-
-import { GET_MONTHS, GET_YEARS, GET_DETAIL_DAY, POST_EVENT, GET_DAYS } from "./action-types";
->>>>>>> bec4343096aa607c4346d430a79308223d1263c8
 
 const URL = "http://localhost:7286";
 
 export const getDays = (monthNumber, yearNumber) => {
-<<<<<<< HEAD
   return async (dispatch) => {
     try {
-      const data = await axios(
-        `${URL}/days?monthNumber=${monthNumber}&yearNumber=${yearNumber}`
-      );
+      const months = {
+        prevMonth: [],
+        actualMonth: [],
+        nextMonth: [],
+        yearNumber: yearNumber
+      };
 
-      console.log(data);
+      const actualMonth = (
+        await axios.get(
+          `${URL}/days?monthNumber=${monthNumber}&yearNumber=${yearNumber}`
+        )
+      ).data;
+      months.actualMonth = actualMonth;
 
-      return dispatch({ type: GET_MONTHS, payload: data });
+      // 0 es enero y 11 es diciembre
+      if (monthNumber === 0) {
+        const prevMonth = (
+          await axios.get(
+            `${URL}/days?monthNumber=${monthNumber + 11}&yearNumber=${
+              yearNumber - 1
+            }` // Obtengo diciembre del año anterior
+          )
+        ).data;
+        months.prevMonth = prevMonth;
+      } else {
+        const prevMonth = (
+          await axios.get(
+            `${URL}/days?monthNumber=${
+              monthNumber - 1
+            }&yearNumber=${yearNumber}`
+          )
+        ).data;
+        months.prevMonth = prevMonth;
+      }
+
+      if (monthNumber === 11) {
+        const nextMonth = (
+          await axios.get(
+            `${URL}/days?monthNumber=${monthNumber - 11}&yearNumber=${
+              yearNumber + 1
+            }` // Obtengo enero del año siguiente
+          )
+        ).data;
+        months.nextMonth = nextMonth;
+      } else {
+        const nextMonth = (
+          await axios.get(
+            `${URL}/days?monthNumber=${
+              monthNumber + 1
+            }&yearNumber=${yearNumber}`
+          )
+        ).data;
+        months.nextMonth = nextMonth;
+      }
+
+      return dispatch({type: GET_DAYS, payload: months});
     } catch (error) {
       return console.log(error);
     }
   };
 };
 
-export const getMonth = () => {
+export const getMonths = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL}/months`);
+      const allMonths = (await axios.get(`${URL}/months`)).data;
 
-      console.log(data);
-
-      return dispatch({ type: GET_MONTHS, payload: data });
+      return dispatch({type: GET_MONTHS, payload: allMonths});
     } catch (error) {
-      console.log(error.message);
+      return console.log(error.message);
     }
   };
 };
-=======
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get(`${URL}/days?monthNumber=${monthNumber}&yearNumber=${yearNumber}`);
 
-            return dispatch({ type: GET_MONTHS, payload: data })
-        } catch (error) {
-            return console.log(error)
-        }
-    }
-}
+export const getMonthsPerYear = (year) => {
+   return async (dispatch) => {
+      try {
+         const daysByMonth = {
+            0: [], // January
+            1: [], // February
+            2: [], // March
+            3: [], // April
+            4: [], // May
+            5: [], // June
+            6: [], // July
+            7: [], // August
+            8: [], // September
+            9: [], // October
+            10: [], // November
+            11: [] // December
+         }
+         for(let prop in daysByMonth){
+            const response = (await axios.get(`${URL}/days?monthNumber=${prop}&yearNumber=${year}`)).data;
+            daysByMonth[prop] = response;
+         }
 
-export const getMonth = ()=>{
-    return async(dispatch)=>{
-        try {
-            const { data } = await axios.get(`${URL}/months`)
-
-            return dispatch({ type: GET_MONTHS, payload: data })
-        } catch (error) {
-            return console.log(error.message)
-        }
-    }
-}
->>>>>>> bec4343096aa607c4346d430a79308223d1263c8
+         return dispatch({type: GET_MONTHS_PER_YEAR, payload: daysByMonth})
+      } catch (error) {
+         return console.log(error.message);
+      }
+   }
+};

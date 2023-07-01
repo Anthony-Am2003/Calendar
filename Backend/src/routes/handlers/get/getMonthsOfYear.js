@@ -1,4 +1,4 @@
-const { monthsController } = require("../controllers/monthsControllers");
+const monthsController = require("../../controllers/get/getMonthsController");
 
 module.exports = (req, res) => {
   try {

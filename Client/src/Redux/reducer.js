@@ -1,33 +1,36 @@
-import { GET_MONTHS } from "./action-types";
-<<<<<<< HEAD
+import { GET_DAYS, GET_MONTHS, GET_MONTHS_PER_YEAR } from "./action-types";
+import { getDaysMd } from "./reducerMd/getDaysMd";
+import { getMonthsMd } from "./reducerMd/getMonthsMd";
+import { getMonthsPerYearMd } from "./reducerMd/getMonthsPerYearMd"
 
 const initialState = {
-  meses: [],
-  dia: [],
-=======
-import { getMonthRd } from "./reducerMd/getMonth";
-
-const initialState = {
-   meses: [],
-   dia: [],
+   allMonths: [], // Contiene 12 meses.
+   showedMonths: {
+      prevMonth: [],
+      actualMonth: [], // Trae el mes actual y prev/next para acomodar la vista.
+      nextMonth: [],
+   },
+   monthsPerYear: {
+      year: undefined,
+      january: [], february: [], march: [], april: [], may: [], june: [], july: [],
+      august: [], september: [], october: [], november: [], december: []
+   },
+   currentYear: undefined
 }
 
 const reducer = (state = initialState, action) => {
    switch (action.type) {
-      case GET_MONTHS:
-         return getMonthRd(state, action);
-      default: return { ...state }
-   }
->>>>>>> bec4343096aa607c4346d430a79308223d1263c8
-};
+      case GET_DAYS:
+         return getDaysMd(state, action);
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_MONTHS:
-      return console.log("first");
-    default:
-      return { ...state };
-  }
+      case GET_MONTHS:
+         return getMonthsMd(state, action);
+
+      case GET_MONTHS_PER_YEAR:
+         return getMonthsPerYearMd(state, action);
+
+      default: return { ...state };
+   }
 };
 
 export default reducer;
