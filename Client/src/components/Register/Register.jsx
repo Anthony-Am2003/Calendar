@@ -1,9 +1,15 @@
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userSession } = useSelector((state) => state);
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -12,31 +18,48 @@ const Register = () => {
   const URL = "http://localhost:7286";
 
   const handleBlurUsername = (e) => {
-    setUser({...user, [e.target.name]: e.target.value});
-    setErrors(validationUsername({...user, [e.target.name]: e.target.value}));
+    setUser({ ...user, [e.target.name]: e.target.value });
+    setErrors(validationUsername({ ...user, [e.target.name]: e.target.value }));
   };
 
   const handleBlurEmail = (e) => {
-    setUser({...user, [e.target.name]: e.target.value});
-    setErrors(validationEmail({...user, [e.target.name]: e.target.value}));
+    setUser({ ...user, [e.target.name]: e.target.value });
+    setErrors(validationEmail({ ...user, [e.target.name]: e.target.value }));
   };
 
   const handleBlurPassword = (e) => {
-    setUser({...user, [e.target.name]: e.target.value});
-    setErrors(validationPassword({...user, [e.target.name]: e.target.value}));
+    setUser({ ...user, [e.target.name]: e.target.value });
+    setErrors(validationPassword({ ...user, [e.target.name]: e.target.value }));
+  };
+
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
+  const handleShowPasswordRepeat = (e) => {
+    e.preventDefault();
+    setShowPasswordRepeat(!showPasswordRepeat);
   };
 
   const handleSumbit = async (e) => {
     e.preventDefault();
+    const userDB = {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    };
     try {
-      const userDB = {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-      };
-      await axios.post(`${URL}/user/register`, userDB);
+      const { data } = await axios.post(`${URL}/user/register`, userDB);
+
+      window.alert(data.message);
+
+      dispatch(login({ username: userDB.username, password: userDB.password }));
+
+      setTimeout(() => {
+        navigate("/month");
+      }, 2500);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -84,7 +107,8 @@ const Register = () => {
         <form
           action=""
           className="mb-0 mt-3 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
-          onSubmit={handleSumbit}>
+          onSubmit={handleSumbit}
+        >
           <p className="text-center text-lg font-medium font-[Poppins]">
             Create your account
           </p>
@@ -131,7 +155,8 @@ const Register = () => {
                   className="h-4 w-4 text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -159,13 +184,23 @@ const Register = () => {
             </label>
 
             <div className="relative">
-              <input
-                type="password"
-                className="w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]"
-                placeholder="Enter password"
-                onBlur={handleBlurPassword}
-                name="password"
-              />
+              {showPassword === true ? (
+                <input
+                  type="text"
+                  className="w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]"
+                  placeholder="Enter password"
+                  onBlur={handleBlurPassword}
+                  name="password"
+                />
+              ) : (
+                <input
+                  type="password"
+                  className="w-full rounded-lg border-gray-200 border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]"
+                  placeholder="Enter password"
+                  onBlur={handleBlurPassword}
+                  name="password"
+                />
+              )}
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                 <svg
@@ -173,7 +208,8 @@ const Register = () => {
                   className="h-4 w-4 text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -202,13 +238,23 @@ const Register = () => {
             </label>
 
             <div className="relative">
-              <input
-                type="password"
-                className="w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]"
-                placeholder="Repeat password"
-                onBlur={handleBlurPassword}
-                name="passwordRepeated"
-              />
+              {showPasswordRepeat === true ? (
+                <input
+                  type="text"
+                  className="w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]"
+                  placeholder="Repeat password"
+                  onBlur={handleBlurPassword}
+                  name="passwordRepeated"
+                />
+              ) : (
+                <input
+                  type="password"
+                  className="w-full rounded-lg border-gray-200  border-2 p-4 pe-12 text-sm shadow-sm bg-white font-[Poppins]"
+                  placeholder="Repeat password"
+                  onBlur={handleBlurPassword}
+                  name="passwordRepeated"
+                />
+              )}
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                 <svg
@@ -216,7 +262,8 @@ const Register = () => {
                   className="h-4 w-4 text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -250,14 +297,16 @@ const Register = () => {
           !errors.passwordLetter ? (
             <button
               type="submit"
-              className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white font-[Poppins]">
+              className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white font-[Poppins]"
+            >
               Sign up
             </button>
           ) : (
             <button
               type="submit"
               className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white disabled:opacity-30 font-[Poppins]"
-              disabled>
+              disabled
+            >
               Sign up
             </button>
           )}

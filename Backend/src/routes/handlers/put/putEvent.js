@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
       category,
       hour
     } = req.body;
-    console.log(name);
+
     const EventUpdate = await putEvent(
       id,
       name,
