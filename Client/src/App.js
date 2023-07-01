@@ -2,8 +2,8 @@ import "./App.css";
 import HomePage from "./views/home/home";
 import LoginPage from "./views/login/login";
 import RegisterPage from "./views/register/register";
-import Calendars from "./views/calendars/calendars";
 import {Routes, Route} from "react-router-dom";
+import YCalendar from "./components/YCalendar/YCalendar";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/calendars" element={<Calendars />} />
+        <Route path="/year" element={<YCalendar />} />
       </Routes>
     </div>
   );
