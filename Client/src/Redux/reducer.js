@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
          return getMonthsMd(state, action);
 
       case GET_MONTHS_PER_YEAR:
-         return getMonthsPerYearMd(state, action)
+         return getMonthsPerYearMd(state, action);
 
       default: return { ...state };
    }

@@ -105,7 +105,7 @@ const Login = () => {
 					</button>
 
 					<p class='text-center text-sm text-gray-500 font-[Poppins]'>
-						No account?
+						{`No account? `}
 						<Link to='/register'>
 							<button class='underline font-[Poppins]' href=''>
 								Sign up

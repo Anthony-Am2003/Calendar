@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const Register = () => {
 	const [errors, setErrors] = useState({});
@@ -9,11 +9,7 @@ const Register = () => {
 		email: "",
 		password: "",
 	});
-	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	setErrors(validation(user));
-	// }, [user]);
+	const URL = "http://localhost:7286";
 
 	const handleBlurUsername = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -30,9 +26,18 @@ const Register = () => {
 		setErrors(validationPassword({...user, [e.target.name]: e.target.value}));
 	};
 
-	const handleSumbit = (e) => {
+	const handleSumbit = async (e) => {
 		e.preventDefault();
-		dispatch("action login");
+		try {
+			const userDB = {
+				username: user.username,
+				email: user.email,
+				password: user.password,
+			};
+			await axios.post(`${URL}/user/register`, userDB);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	var regexSymbols = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
@@ -249,7 +254,7 @@ const Register = () => {
 					errors.passwordMatch ||
 					errors.passwordLetter) ? (<h1 class='text-sm text-gray-420 font-[Poppins]'>Check your errors</h1>) : <h1></h1>}
 					<p class='text-center text-sm text-gray-500 font-[Poppins]'>
-						Have already an account?
+						{`Have already an account? `}
 						<Link to='/login'>
 							<button class='underline' href=''>
 								Sign in

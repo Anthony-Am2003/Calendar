@@ -106,7 +106,7 @@ export const getMonthsPerYear = (year) => {
          }
          for(let prop in daysByMonth){
             const response = (await axios.get(`${URL}/days?monthNumber=${prop}&yearNumber=${year}`)).data;
-            daysByMonth[prop] = response
+            daysByMonth[prop] = response;
          }
 
          return dispatch({type: GET_MONTHS_PER_YEAR, payload: daysByMonth})
