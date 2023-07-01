@@ -1,6 +1,4 @@
-const { DataTypes } = require('sequelize');
-
-module.exports = (sequelize) => {
+const {DataTypes} = require("sequelize");
     sequelize.define('Events', {
         id: {
             type: DataTypes.UUID,
@@ -57,3 +55,4 @@ module.exports = (sequelize) => {
         },
     }, { timestamps: true });
 };
+
