@@ -1,46 +1,47 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getDays, getMonths, getMonthsPerYear } from "../../Redux/actions";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getDays, getMonths, getMonthsPerYear} from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Calendar = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const week = [0, 1, 2, 3, 4, 5, 6];
-	const { showedMonths } = useSelector((state) => state);
-	const prev = showedMonths.prevMonth;
-	const month = showedMonths.actualMonth;
-	const next = showedMonths.nextMonth;
+  const week = [0, 1, 2, 3, 4, 5, 6];
+  const {showedMonths} = useSelector((state) => state);
+  const prev = showedMonths.prevMonth;
+  const month = showedMonths.actualMonth;
+  const next = showedMonths.nextMonth;
 
 	const fecha = new Date();
+	const dayNumberTd = fecha.getDate();
 	const monthNumberTd = fecha.getMonth();
 	const yearNumberTd = fecha.getFullYear();
-	const [monthNumber, setMonthNumber] = useState(2);
-	const [yearNumber, setYearNumber] = useState(2021);
+	const today = `${yearNumberTd}-${monthNumberTd + 1}-${dayNumberTd}`;
+	const [monthNumber, setMonthNumber] = useState(monthNumberTd);
+	const [yearNumber, setYearNumber] = useState(yearNumberTd);
 
 	useEffect(() => {
-		dispatch(getDays(monthNumber, yearNumber)).then(() => {
-			if (month.length && prev.length && next.length) {
-				if (month.day !== "Sunday") {
-					while (month[0].day !== "Sunday") {
-						let ultimo = prev[prev.length - 1];
-						month.unshift(ultimo);
-						prev.pop();
-					}
-				}
-				if (month[month.length - 1].day !== "Saturday") {
-					console.log(month[month.length - 1].day);
-					while (month[month.length - 1].day !== "Saturday") {
-						let primero = next[0];
-						month.push(primero);
-						next.shift();
-					}
-				}
+		dispatch(getDays(monthNumber, yearNumber));
+		dispatch(getMonthsPerYear(yearNumber));
+		dispatch(getMonths());
+	}, [monthNumber, yearNumber]);
+
+	if (month.length && prev.length && next.length) {
+		if (month.day !== "Sunday") {
+			while (month[0].day !== "Sunday") {
+				let ultimo = prev[prev.length - 1];
+				month.unshift(ultimo);
+				prev.pop();
 			}
-		});
-      dispatch(getMonthsPerYear(yearNumber));
-      dispatch(getMonths());
-	}, []);
+		}
+		if (month[month.length - 1].day !== "Saturday") {
+			while (month[month.length - 1].day !== "Saturday") {
+				let primero = next[0];
+				month.push(primero);
+				next.shift();
+			}
+		}
+	}
 
 	const monthName = (monthNumer) => {
 		switch (monthNumer) {
@@ -71,23 +72,37 @@ const Calendar = () => {
 		}
 	};
 
-	const dayName = (dayNumber) => {
-		switch (dayNumber) {
-			case 0:
-				return "Sunday";
-			case 1:
-				return "Monday";
-			case 2:
-				return "Tuesday";
-			case 3:
-				return "Wednesday";
-			case 4:
-				return "Thursday";
-			case 5:
-				return "Friday";
-			default:
-				return "Saturday";
-		}
+  const dayName = (dayNumber) => {
+    switch (dayNumber) {
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      default:
+        return "Saturday";
+    }
+  };
+
+	const handleClickPrev = () => {
+		if (monthNumber === 0) {
+			setMonthNumber(monthNumber + 11);
+			setYearNumber(yearNumber - 1);
+		} else setMonthNumber(monthNumber - 1);
+	};
+
+	const handleClickNext = () => {
+		if (monthNumber === 11) {
+			setMonthNumber(monthNumber - 11);
+			setYearNumber(yearNumber + 1);
+		} else setMonthNumber(monthNumber + 1);
 	};
 
 	return (
@@ -109,7 +124,64 @@ const Calendar = () => {
 								/>
 							</svg>
 						</a>
-						{`${monthName(monthNumber)} ${yearNumber}`} <SearchBar />
+						<div className='w-1/3 flex flex-row justify-between'>
+							<button
+								onClick={handleClickPrev}
+								className='p-1 mr-4 hover:scale-110 duration-200'
+							>
+								<svg
+									width='0.5em'
+									fill='black'
+									height='1em'
+									viewBox='0 0 16 16'
+									className='bi bi-arrow-left-circle'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<path
+										fill-rule='evenodd'
+										d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'
+									/>
+									<path
+										fill-rule='evenodd'
+										d='M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z'
+									/>
+									<path
+										fill-rule='evenodd'
+										d='M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z'
+									/>
+								</svg>
+							</button>
+							<span className='text-center'>
+								{`${monthName(monthNumber)} ${yearNumber}`}
+							</span>
+							<button
+								onClick={handleClickNext}
+								className='p-1 ml-4 hover:scale-110 duration-300'
+							>
+								<svg
+									width='0.5em'
+									fill='black'
+									height='1em'
+									viewBox='0 0 16 16'
+									class='bi bi-arrow-right-circle'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<path
+										fill-rule='evenodd'
+										d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'
+									/>
+									<path
+										fill-rule='evenodd'
+										d='M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z'
+									/>
+									<path
+										fill-rule='evenodd'
+										d='M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z'
+									/>
+								</svg>
+							</button>
+						</div>
+						<SearchBar />
 					</span>
 					<div className='buttons'>
 						<div className='drawer drawer-end'>
@@ -124,37 +196,172 @@ const Calendar = () => {
 									className='drawer-button btn btn-ghost'
 								>
 									<svg
-										width='1.5em'
-										fill='black'
-										height='1.5em'
-										viewBox='0 0 16 16'
-										className='bi bi-arrow-left-circle'
+										width='24'
+										height='24'
+										viewBox='0 0 24 24'
+										fill='none'
 										xmlns='http://www.w3.org/2000/svg'
 									>
-										<path
-											fillRule='evenodd'
-											d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'
+										<circle
+											cx='12'
+											cy='12'
+											r='10'
+											stroke='currentColor'
+											stroke-width='2'
 										/>
 										<path
-											fillRule='evenodd'
-											d='M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z'
-										/>
-										<path
-											fillRule='evenodd'
-											d='M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z'
+											d='M12 8V16M8 12H16'
+											stroke='currentColor'
+											stroke-width='2'
 										/>
 									</svg>
 								</label>
 							</div>
 							<div className='drawer-side'>
 								<label htmlFor='my-drawer-4' className='drawer-overlay'></label>
-								<ul className='menu p-4 w-80 h-full bg-base-200 text-base-content'>
-									<li>
-										<a>Nico puto</a>
-									</li>
-									<li>
-										<a>Tier list</a>
-									</li>
+								<ul className='menu p-4 w-[40vw] h-full from-[#076585]  to-[#fff] bg-gradient-to-b text-base-content'>
+									<form>
+										<h1 className=' font-[Poppins] text-4xl drop-shadow-lg shadow-black mb-10 text-white  mt-5 '>
+											Add your custom event.
+										</h1>
+										<div className='grid  gap-6 mb-6 md:grid-cols-2'>
+											<div>
+												<label
+													for='first_name'
+													className='block mb-2 text-sm font-medium font-[Poppins] text-white dark:text-white'
+												>
+													Name
+												</label>
+												<input
+													type='text'
+													id='first_name'
+													className='bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+													placeholder=''
+													required
+												/>
+											</div>
+											<div>
+												<label
+													for='last_name'
+													className='block mb-2 text-sm font-medium font-[Poppins] text-white dark:text-white'
+												>
+													Initial Date
+												</label>
+												<input
+													type='date'
+													id='last_name'
+													className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+													placeholder=''
+													required
+												/>
+											</div>
+											<div>
+												<label
+													for='company'
+													className='block mb-2 text-sm font-[Poppins] font-medium text-white dark:text-white'
+												>
+													Final Date
+												</label>
+												<input
+													type='date'
+													id='company'
+													className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+													placeholder=''
+													required
+												/>
+											</div>
+											<div>
+												<label
+													for='phone'
+													className='block mb-2 text-sm font-[Poppins] font-medium text-white dark:text-white'
+												>
+													Image
+												</label>
+												<input
+													type='tel'
+													id='phone'
+													className='bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+													placeholder=''
+													required
+												/>
+											</div>
+											<div>
+												<label
+													for='website'
+													className='block mb-2  font-[Poppins] text-sm font-medium text-white dark:text-white'
+												>
+													Description
+												</label>
+												<input
+													type='url'
+													id='website'
+													className='bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+													placeholder=''
+													required
+												/>
+											</div>
+											<div>
+												<label
+													for='visitors'
+													className='block mb-2 text-sm font-[Poppins] font-medium text-white dark:text-white'
+												>
+													Location
+												</label>
+												<input
+													type='number'
+													id='visitors'
+													className='bg-gray-50 border  border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+													placeholder=''
+													required
+												/>
+											</div>
+										</div>
+										<div className=' mb-6'>
+											<label
+												for='email'
+												className='block mb-2 text-sm font-[Poppins] font-medium text-white dark:text-white'
+											>
+												Category
+											</label>
+											<input
+												type='email'
+												id='email'
+												className='bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+												placeholder=''
+												required
+											/>
+										</div>
+										<div className='flex items-start mb-6'>
+											<div className='flex items-center h-5'>
+												<input
+													id='remember'
+													type='checkbox'
+													value=''
+													className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800'
+													required
+												/>
+											</div>
+											<label
+												for='remember'
+												className='ml-2 text-sm font-medium font-[Poppins] text-gray-900 dark:text-gray-300'
+											>
+												Remind me of my {""}
+												<a
+													href='#'
+													className='text-blue-600 font-[Poppins] hover:underline dark:text-blue-500'
+												>
+													new event.
+												</a>
+												.
+											</label>
+										</div>
+										<button
+											type='submit'
+											className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+										>
+											Add event
+										</button>
+									</form>
 								</ul>
 							</div>
 						</div>
@@ -187,13 +394,21 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-												<div className='top h-5 w-full'>
-													<span className='text-gray-500'>{day.date}</span>
+											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+												<div className='h-5 w-full'>
+													<div
+														className={
+															today !== day.fullDate
+																? "mx-auto w-16 rounded- border-2 border-red-700"
+																: "text-gray-500"
+														}
+													>
+														{day.date}
+													</div>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -201,13 +416,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border bg-gray-100 p-1 h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -220,13 +435,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -234,13 +449,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border bg-gray-100 p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -253,13 +468,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -267,13 +482,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border bg-gray-100 p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -286,13 +501,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -300,13 +515,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border bg-gray-100 p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -319,13 +534,13 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
@@ -333,325 +548,52 @@ const Calendar = () => {
 									return (
 										<td
 											key={day.date}
-											className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+											className='border bg-gray-100 p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
 										>
-											<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+											<div className='flex flex-col h-36  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
 												<div className='top h-5 w-full'>
 													<span className='text-gray-500'>{day.date}</span>
 												</div>
-												<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
 											</div>
 										</td>
 									);
 								}
 							})}
 						</tr>
-						{/* <tr>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300 '>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>1</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'>
-										<div className='event bg-purple-400 text-white rounded p-1 text-sm mb-1'>
-											<span className='event-name'>Meeting</span>
-											<span className='time'>12:00~14:00</span>
-										</div>
-										<div className='event bg-purple-400 text-white rounded p-1 text-sm mb-1'>
-											<span className='event-name'>Meeting</span>
-											<span className='time'>18:00~20:00</span>
-										</div>
-									</div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>2</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>3</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>4</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>6</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-hidden transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>7</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'>
-										<div className='event bg-blue-400 text-white rounded p-1 text-sm mb-1'>
-											<span className='event-name'>Shopping</span>
-											<span className='time'>12:00~14:00</span>
-										</div>
-									</div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500 text-sm'>8</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-						</tr>
 						<tr className='text-center h-20'>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>9</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>10</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>12</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>13</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>14</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10  overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>15</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500 text-sm'>16</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
+							{month.slice(35, 42).map((day) => {
+								if (Number(day.fullDate.split("-")[1]) === monthNumber + 1) {
+									return (
+										<td
+											key={day.date}
+											className='border p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+										>
+											<div className='flex flex-col h-36 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+												<div className='top h-5 w-full'>
+													<span className='text-gray-500'>{day.date}</span>
+												</div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
+											</div>
+										</td>
+									);
+								} else {
+									return (
+										<td
+											key={day.date}
+											className='border bg-gray-100 p-1 h-36 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'
+										>
+											<div className='flex flex-col h-36  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
+												<div className='top h-5 w-full'>
+													<span className='text-gray-500'>{day.date}</span>
+												</div>
+												<div className='bottom flex-grow h-36 py-1 w-full cursor-pointer'></div>
+											</div>
+										</td>
+									);
+								}
+							})}
 						</tr>
-
-						<tr className='text-center h-20'>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>16</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10  overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>17</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10  overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>18</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10  overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>19</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10  overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>20</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10  overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>21</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500 text-sm'>22</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-						</tr>
-
-						<tr className='text-center h-20'>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>23</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>24</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>25</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>26</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>27</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>28</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500 text-sm'>29</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-						</tr>
-						<tr className='text-center h-20'>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40 xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>30</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>31</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>1</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>2</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>3</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500'>4</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-							<td className='border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300'>
-								<div className='flex flex-col h-40  xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden'>
-									<div className='top h-5 w-full'>
-										<span className='text-gray-500 text-sm'>5</span>
-									</div>
-									<div className='bottom flex-grow h-30 py-1 w-full cursor-pointer'></div>
-								</div>
-							</td>
-						</tr> */}
 					</tbody>
 				</table>
 			</div>
