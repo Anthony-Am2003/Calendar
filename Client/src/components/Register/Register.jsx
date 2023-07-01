@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -53,11 +54,7 @@ const Register = () => {
 
       window.alert(data.message);
 
-      dispatch(login({ username: userDB.username, password: userDB.password }));
-
-      setTimeout(() => {
-        navigate("/month");
-      }, 2500);
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     }

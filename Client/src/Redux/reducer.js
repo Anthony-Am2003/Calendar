@@ -1,6 +1,5 @@
 import {
   GET_DAYS,
-  GET_DETAIL_EVENT,
   GET_EVENT,
   GET_MONTHS,
   GET_MONTHS_PER_YEAR,
@@ -41,6 +40,7 @@ const initialState = {
   },
   currentYear: undefined,
   events: [],
+  eventDetail: [],
   userSession: {
     id: "",
     username: "",
