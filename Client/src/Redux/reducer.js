@@ -1,5 +1,6 @@
 import {
   GET_DAYS,
+  GET_DETAIL_EVENT,
   GET_EVENT,
   GET_MONTHS,
   GET_MONTHS_PER_YEAR,
@@ -7,6 +8,7 @@ import {
 } from "./action-types";
 import {getAllEventsMd} from "./reducerMd/getAllEventsMd";
 import {getDaysMd} from "./reducerMd/getDaysMd";
+import {getEventDetailMd} from "./reducerMd/getDetailEvMd";
 import {getMonthsMd} from "./reducerMd/getMonthsMd";
 import {getMonthsPerYearMd} from "./reducerMd/getMonthsPerYearMd";
 import {postEvent} from "./reducerMd/postEvent";
@@ -35,6 +37,7 @@ const initialState = {
   },
   currentYear: undefined,
   events: [],
+  eventDetail: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,7 +52,8 @@ const reducer = (state = initialState, action) => {
       return getAllEventsMd(state, action);
     case POST_EVENT:
       return postEvent(state, action);
-
+    case GET_DETAIL_EVENT:
+      return getEventDetailMd(state, action);
     default:
       return {...state};
   }
