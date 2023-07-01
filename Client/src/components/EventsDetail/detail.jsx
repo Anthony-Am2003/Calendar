@@ -1,13 +1,17 @@
 import {useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {getDetail} from "../../Redux/actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+
+
+
 const EventDetail = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const name = new URLSearchParams(location.search).get("name");
+  const selector = useSelector(state => state.eventDetail)
 
-  console.log(name);
+  console.log(selector);
   useEffect(() => {
     dispatch(getDetail(name));
   }, []);
