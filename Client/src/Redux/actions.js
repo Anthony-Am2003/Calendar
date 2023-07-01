@@ -5,7 +5,7 @@ import {
   GET_MONTHS,
   GET_MONTHS_PER_YEAR,
   GET_EVENT,
-  GET_DETAIL_DAY,
+  GET_DETAIL_EVENT,
   POST_EVENT,
   LOGIN,
   LOGOUT,
@@ -126,6 +126,18 @@ export const postEvent = (payload) => {
       const postEvent = await axios.post(`${URL}/events`, payload);
       alert("Evento creado");
       return postEvent;
+    } catch (error) {
+      alert(error.response.data.error);
+    }
+  };
+};
+
+export const getDetail = (name) => {
+  return async function (dispatch) {
+    try {
+      const detailEvents = await axios.get(`${URL}/events/name?name=${name}`);
+      const detailEventsData = detailEvents.data;
+      return dispatch({ type: GET_DETAIL_EVENT, payload: detailEventsData });
     } catch (error) {
       alert(error.response.data.error);
     }

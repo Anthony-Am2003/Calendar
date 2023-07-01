@@ -6,6 +6,7 @@ import {
   POST_EVENT,
   LOGIN,
   LOGOUT,
+  GET_DETAIL_EVENT,
 } from "./action-types";
 import { getAllEventsMd } from "./reducerMd/getAllEventsMd";
 import { getDaysMd } from "./reducerMd/getDaysMd";
