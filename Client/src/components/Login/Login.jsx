@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../Redux/actions";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { userSession } = useSelector((state) => state);
   const [errors, setErrors] = useState({});
   const [errorsInput, setErrorsInput] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +13,7 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const URL = "http://localhost:7286";
   // 	useEffect(()=> {
   // 		setErrors(validation(user))
   // }, [user])
@@ -32,14 +30,17 @@ const Login = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    const userDB = {
-      username: user.username,
-      password: user.password,
-    };
-
-    await dispatch(login(userDB, setErrorsInput));
-
-    navigate("/month");
+    try {
+      const userDB = {
+        username: user.username,
+        password: user.password,
+      };
+      const { data } = await axios.post(`${URL}/user/login`, userDB);
+      console.log(data.message);
+    } catch (error) {
+      setErrorsInput(true);
+      console.log(error.response.data?.error);
+    }
   };
 
   // const validation = (data) => {
