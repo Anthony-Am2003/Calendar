@@ -10,7 +10,8 @@ module.exports = async (
   description,
   location,
   reminder,
-  category
+  category,
+  hour
 ) => {
   const eventToPut = await Events.findByPk(id);
   
@@ -67,6 +68,10 @@ module.exports = async (
 
   if (allDates.length > 0) {
     updatedValues.allDates = allDates;
+  }
+
+  if (hour) {
+    updatedValues.hour = hour;
   }
 
   await eventToPut.update(updatedValues);

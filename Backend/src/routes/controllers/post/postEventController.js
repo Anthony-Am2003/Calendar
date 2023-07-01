@@ -9,7 +9,8 @@ module.exports = async (
   description,
   location,
   reminder,
-  category
+  category,
+  hour
 ) => {
   const allDates = [];
 
@@ -31,6 +32,7 @@ module.exports = async (
     reminder,
     category,
     allDates,
+    hour
   });
 
   return newEvent;
