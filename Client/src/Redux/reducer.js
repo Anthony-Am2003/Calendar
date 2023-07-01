@@ -40,6 +40,7 @@ const initialState = {
   },
   currentYear: undefined,
   events: [],
+  eventDetail: [],
   userSession: {
     id: "",
     username: "",
