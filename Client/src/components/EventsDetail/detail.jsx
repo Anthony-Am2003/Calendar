@@ -69,17 +69,19 @@ const EventDetail = () => {
             <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-none">
               Let us handle
               <br className="hidden md:block" />
-              your next {selector[0]?.name} {""}
-              <span className="inline-block text-deep-purple-accent-400">
-                EVENT.
+              your next EVENT:{" "}
+              <span className="inline-block text-secondary">
+                {selector[0]?.name}.
               </span>
             </h2>
             <p className="text-base text-gray-700 md:text-lg">
               Here in Klendar©, our first priority is to satisfy our users. We
               value your events and understand the importance of providing
-              accurate and meaningful descriptions. Your event, "
-              {selector[0]?.description}", is an integral part of our commitment
-              to delivering a personalized and user-centric experience.
+              accurate and meaningful reason to add it. Your event, "
+              {selector[0]?.name}" which has a description:
+              {selector[0]?.description} , provides an integral part of our
+              commitment to delivering a personalized and user-centric
+              experience.
             </p>
           </div>
           <div className="stats overflow-hidden shadow">

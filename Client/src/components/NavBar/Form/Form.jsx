@@ -16,12 +16,20 @@ const Form = () => {
   });
   const dispatch = useDispatch();
   const handleChange = (e) => {
+    const {name} = e.target;
     e.preventDefault();
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [name]: e.target.value,
     });
   };
+  const handleCheck = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postEvent(input));
@@ -205,24 +213,23 @@ const Form = () => {
               <div className="flex items-start mb-6">
                 <div className="flex items-center h-5">
                   <input
-                    id="remember"
+                    id="reminder"
                     type="checkbox"
-                    value={input.reminder}
-                    onChange={handleChange}
-                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    checked={input.reminder}
+                    onChange={handleCheck}
+                    className="w-4 h-4  z-50 border-gray-300 rounded bg-gray-50"
                     name="reminder"
                   />
                 </div>
                 <label
-                  htmlFor="remember"
+                  htmlFor="reminder"
                   className="ml-2 text-sm font-medium font-[Poppins] text-gray-900 dark:text-gray-300">
                   Remind me of my {""}
                   <a
-                    href="#"
+                    href="/events"
                     className="text-blue-600 font-[Poppins] hover:underline dark:text-blue-500">
-                    new event.
+                    event.
                   </a>
-                  .
                 </label>
               </div>
               <button
