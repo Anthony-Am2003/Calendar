@@ -152,9 +152,9 @@ const Form = () => {
                     Image
                   </label>
                   <input
-                    type="text"
+                    type="file"
                     id="phone"
-                    className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="file-input file-input-primary border-none h-[2.9rem] mb-2  rounded-lg w-full max-w-xs"
                     placeholder=""
                     name="image"
                     onChange={handleChange}
@@ -217,7 +217,7 @@ const Form = () => {
                     type="checkbox"
                     checked={input.reminder}
                     onChange={handleCheck}
-                    className="w-4 h-4  z-50 border-gray-300 rounded bg-gray-50"
+                    className="w-4 h-4  z-50 font-[Poppins] border-gray-300 rounded bg-gray-50"
                     name="reminder"
                   />
                 </div>
@@ -227,14 +227,14 @@ const Form = () => {
                   Remind me of my {""}
                   <a
                     href="/events"
-                    className="text-blue-600 font-[Poppins] hover:underline dark:text-blue-500">
+                    className="text-primary font-[Poppins] hover:underline dark:text-blue-500">
                     event.
                   </a>
                 </label>
               </div>
               <button
                 type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                className="text-white text-md bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Add event
               </button>
             </form>
