@@ -1,10 +1,10 @@
 import "./App.css";
 import LoginPage from "./views/login/login";
 import RegisterPage from "./views/register/register";
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import YCalendar from "./components/YCalendar/YCalendar";
 import Month from "./views/month/month";
-import Events from "./components/AllEvents/Events";
+import Events from "./components/allEvents/events";
 import EventDetail from "./components/EventsDetail/EventsDetail";
 
 function App() {
