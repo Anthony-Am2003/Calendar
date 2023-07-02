@@ -1,18 +1,22 @@
 import "./App.css";
-import HomePage from "./views/home/home";
 import LoginPage from "./views/login/login";
 import RegisterPage from "./views/register/register";
-import Calendars from "./views/calendars/calendars";
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import YCalendar from "./components/YCalendar/YCalendar";
+import Month from "./views/month/month";
+import Events from "./components/allEvents/events";
+import EventDetail from "./components/EventsDetail/detail";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/month" element={<Month />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/calendars" element={<Calendars />} />
+        <Route path="/year" element={<YCalendar />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/eventsday" element={<EventDetail />} />
       </Routes>
     </div>
   );
