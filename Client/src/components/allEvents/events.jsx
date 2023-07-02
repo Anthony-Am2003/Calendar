@@ -17,19 +17,22 @@ const Events = () => {
 
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-20">
-          <h2 className="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">
-            Check all the events that you added.
+      <div className="container px-5  mx-auto">
+        <div className="flex flex-col text-center w-full mb-8">
+          <h2 className="text-xs text-indigo-500 tracking-widest font-medium title-font mb-3 mt-1">
+            Check all the events that you added. Also you can{" "}
+            <a href="/month" className="link link-secondary">
+              Go back
+            </a>
           </h2>
-          <h1 className="sm:text-3xl md:text-5xl text-2xl font-medium  font-[Poppins] text-gray-900">
+          <h1 className="sm:text-3xl md:text-5xl text-2xl font-medium font-[Poppins] text-gray-900">
             Upcoming events
           </h1>
         </div>
-        <div className="container grid grid-rows-2 gap-5 grid-cols-2  mx-auto">
+        <div className="container grid md:grid-rows-2 gap-5 md:grid-cols-2 sm:grid-cols-2 mx-auto">
           {eventsToRender.map((event, index) => (
-            <div className="flex flex-wrap -m-4">
-              <div className="p-4 md:w-full">
+            <div className="flex basis-5 flex-wrap -m-4">
+              <div className="p-4 w-full">
                 <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
                   <div className="flex items-center mb-3">
                     <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
@@ -74,20 +77,36 @@ const Events = () => {
           ))}
         </div>
 
-        <div className="flex justify-center mt-4">
-          {currentPage > 1 && (
-            <button onClick={() => setCurrentPage(currentPage - 1)}>
-              Previous
+        <div className="flex justify-center join mt-7">
+          {currentPage > 1 ? (
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="join-item btn">
+              «
+            </button>
+          ) : (
+            <button
+              disabled
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="join-item btn">
+              «
             </button>
           )}
           {/* Muestra el número de página actual y el número total de páginas */}
-          <span className="mx-2">
-            Page {currentPage} of {totalPages}
-          </span>
+          <span className="join-item btn btn-primary">{currentPage}</span>
           {/* Botón para ir a la siguiente página */}
-          {currentPage < totalPages && (
-            <button onClick={() => setCurrentPage(currentPage + 1)}>
-              Next
+          {currentPage < totalPages ? (
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="join-item btn">
+              »
+            </button>
+          ) : (
+            <button
+              disabled
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="join-item btn">
+              »
             </button>
           )}
         </div>
