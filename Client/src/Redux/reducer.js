@@ -8,13 +8,14 @@ import {
   LOGOUT,
   GET_DETAIL_EVENT,
 } from "./action-types";
-import { getAllEventsMd } from "./reducerMd/getAllEventsMd";
-import { getDaysMd } from "./reducerMd/getDaysMd";
-import { getMonthsMd } from "./reducerMd/getMonthsMd";
-import { getMonthsPerYearMd } from "./reducerMd/getMonthsPerYearMd";
-import { postEvent } from "./reducerMd/postEvent";
-import { login } from "./reducerMd/login";
-import { logout } from "./reducerMd/logout";
+import {getAllEventsMd} from "./reducerMd/getAllEventsMd";
+import {getDaysMd} from "./reducerMd/getDaysMd";
+import {getMonthsMd} from "./reducerMd/getMonthsMd";
+import {getMonthsPerYearMd} from "./reducerMd/getMonthsPerYearMd";
+import {postEvent} from "./reducerMd/postEvent";
+import {login} from "./reducerMd/login";
+import {logout} from "./reducerMd/logout";
+import {getEventDetailMd} from "./reducerMd/getDetailEvMd";
 
 const initialState = {
   allMonths: [], // Contiene 12 meses.
@@ -60,14 +61,15 @@ const reducer = (state = initialState, action) => {
       return getAllEventsMd(state, action);
     case POST_EVENT:
       return postEvent(state, action);
-
+    case GET_DETAIL_EVENT:
+      return getEventDetailMd(state, action);
     case LOGIN:
       return login(state, action);
     case LOGOUT:
       return logout(state, action);
 
     default:
-      return { ...state };
+      return {...state};
   }
 };
 
