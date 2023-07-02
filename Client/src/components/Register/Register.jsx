@@ -98,7 +98,7 @@ const Register = () => {
   };
 
   return (
-		<div style={{ backgroundImage: `url(${Port})` }} className='bg-cover bg-center h-screen flex flex-row justify-center items-center max-w-screen-xl'>
+		<div style={{ backgroundImage: `url(${Port})` }} className='bg-cover bg-center h-screen flex flex-row justify-center items-center min-w-screen'>
 			<div className='min-w-[50%] max-w-lg border rounded-lg bg-[#fff9]'>
 				<h1 className='justify-center text-3xl flex font-bold text-indigo-600 sm:text-4xl font-[Poppins] h-20 items-end'>Calendar App</h1>
 				<form action='' className='mb-0 mt-3 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8' onSubmit={handleSumbit}>
