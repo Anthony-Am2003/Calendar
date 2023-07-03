@@ -39,7 +39,7 @@ const initialState = {
     november: [],
     december: [],
   },
-  currentYear: undefined,
+  currentYear: "",
   events: [],
   eventDetail: [],
   userSession: {

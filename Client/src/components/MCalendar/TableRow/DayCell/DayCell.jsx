@@ -1,4 +1,4 @@
-import { today } from "../../../Helpers/Dates";
+import {today} from "../../../Helpers/Dates";
 
 const DayCell = (day, monthNumber) => {
   const isCurrentMonth = Number(day.fullDate.split("-")[1]) === monthNumber + 1;
@@ -12,10 +12,9 @@ const DayCell = (day, monthNumber) => {
           <div
             className={
               today === day.fullDate
-                ? "mx-auto w-6 h-6 rounded-full bg-blue-600"
+                ? "mx-auto w-7 h-7 rounded-full border-blue-600 border-2"
                 : "text-gray-500"
-            }
-          >
+            }>
             {day.date}
           </div>
         </div>
