@@ -2,5 +2,9 @@ const { Events } = require("../../../db");
 
 module.exports = async () => {
   const allEvents = await Events.findAll();
-  return allEvents;
+
+  const sortedEvents = allEvents.sort((a, b) => {
+    return new Date(a.initialDate) - new Date(b.initialDate);
+  });
+  return sortedEvents;
 };

@@ -1,8 +1,13 @@
 const { Events } = require("../../../db");
 
 module.exports = async (id) => {
-  await Events.destroy({ where: { id } });
-  const allEvents = await Events.findAll();
+  const eventToFind = Events.findByPk(id);
 
-  return allEvents;
+  if (eventToFind) {
+    await Events.destroy({ where: { id } });
+    const allEvents = await Events.findAll();
+    return allEvents;
+  } else {
+    throw new Error("Event not found.");
+  }
 };
