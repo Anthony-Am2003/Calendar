@@ -1,31 +1,21 @@
 import React, {useEffect, useState} from "react";
-import {getMonthsPerYear} from "../../Redux/actions";
+import {getMonths, getMonthsPerYear} from "../../Redux/actions";
+import {useSelector, useDispatch} from "react-redux";
 
 const YCalendar = () => {
+  const dispatch = useDispatch();
   const [year, setYear] = useState(2023);
-
-  // const currentYear = useSelector((state) => state.currentYear)
-  // useEffect(() => {
-  //    dispatch(getMonthsPerYear(currentYear))
-  // }, [currentYear])
+  console.log(year);
+  useEffect(() => {
+    dispatch(getMonthsPerYear(year));
+    dispatch(getMonths());
+  }, [year]);
+  const months = useSelector((state) => state.allMonths);
+  const daysByMonth = useSelector((state) => state.monthsPerYear);
 
   const generateCalendars = () => {
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
     let calendars = [];
-    for (let i = 0; i < months.length; i++) {
+    for (let i = 0; i < Object.keys(months).length; i++) {
       let calendar = (
         <div className="w-full max-w-lg p-5 mx-auto bg-white rounded-2xl shadow-xl flex flex-col">
           <div className="flex justify-center pb-4">
@@ -59,22 +49,28 @@ const YCalendar = () => {
         </div>
       );
       let days = [];
-      for (let j = -3; j <= 31; j++) {
+      const monthName = months[i].toLowerCase();
+      const daysInMonth = daysByMonth[monthName].length;
+      for (let j = -3; j <= daysInMonth; j++) {
         days.push(
           <span
             className={`${
               j <= 0 ? "text-gray-400" : ""
-            } w-10 flex justify-center items-center  cursor-pointer`}>
+            } w-10 flex justify-center items-center cursor-pointer`}>
             {(j <= 0 ? 31 + j : j).toString().padStart(2, "0")}
           </span>
         );
-        if ((j + 4) % 7 === 0 || j === 31) {
+        if ((j + 4) % 7 === 0 || j === daysInMonth) {
+          let justifyClass = "justify-between";
+          if (days.length < 7) {
+            justifyClass = "justify-start gap-[0.40rem]";
+          }
           calendar = React.cloneElement(calendar, {}, [
             ...calendar.props.children,
             <div
-              className={`flex justify-between ml-${
-                j === 31 ? 1 : 0
-              } font-medium text-sm pb-2`}>
+              className={`flex ${justifyClass} ml-${
+                j === daysInMonth ? 1 : 0
+              } font-medium text-sm  pb-2`}>
               {days}
             </div>,
           ]);
