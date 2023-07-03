@@ -1,20 +1,20 @@
 // Utils
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getDays, getMonths, getMonthsPerYear } from "../../Redux/actions";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getDays, getMonths, getMonthsPerYear} from "../../Redux/actions";
 // Components
 import NavBar from "../NavBar/NavBar";
 import TableRow from "./TableRow/TableRow";
 import DaysName from "./DaysName/DaysName";
 // Helpers
-import { monthNumberTd, week, yearNumberTd } from "../Helpers/Dates";
-import { completeMonth } from "../Helpers/Format";
+import {monthNumberTd, week, yearNumberTd} from "../Helpers/Dates";
+import {completeMonth} from "../Helpers/Format";
 
 const MCalendar = () => {
   const dispatch = useDispatch();
   //   const {events} = useSelector((state) => state);
   //   console.log(events);
-  const { showedMonths } = useSelector((state) => state);
+  const {showedMonths} = useSelector((state) => state);
   const prev = showedMonths.prevMonth;
   const month = showedMonths.actualMonth;
   const next = showedMonths.nextMonth;
