@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from "react-redux";
 const YCalendar = () => {
   const dispatch = useDispatch();
   const [year, setYear] = useState(2023);
-
+  console.log(year);
   useEffect(() => {
     dispatch(getMonthsPerYear(year));
     dispatch(getMonths());
